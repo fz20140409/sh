@@ -27,6 +27,10 @@ Route::get('/ShopCate/index', "ShopCateController@index")->name('ShopCate.index'
 //商品管理
 Route::get('/GoodsManage/index', "GoodsManageController@index")->name('GoodsManage.index');
 Route::get('/GoodsManage/create', "GoodsManageController@create")->name('GoodsManage.create');
+Route::post('/GoodsManage/store', "GoodsManageController@store")->name('GoodsManage.store');
+
+Route::post('/Uploader/uploadImg', "Tools\UploaderController@uploadImg")->name('Uploader.uploadImg');
+Route::post('/Uploader/deleteUploadImg', "Tools\UploaderController@deleteUploadImg")->name('Uploader.deleteUploadImg');
 
 
 
