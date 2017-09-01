@@ -24,6 +24,14 @@ class GoodsManageController extends Controller
      */
     function create()
     {
+       return view('goods_manage.create');
 
     }
+
+    function store(Request $request){
+        dd($request->all());
+
+    }
+
+
 }
