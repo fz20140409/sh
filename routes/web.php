@@ -17,20 +17,39 @@ Route::get('/',function (){
 Route::get('/Login/showLogin', "LoginController@showLogin")->name('Login.showLogin');
 Route::post('/Login/doLogin', "LoginController@doLogin")->name('Login.doLogin');
 Route::get('/Login/logout', "LoginController@logout")->name('Login.logout');
+//发送验证码
+Route::post('/VerificationCode/sendCode', "Tools\VerificationCodeController@sendCode")->name('VerificationCode.sendCode');
 
 //主页
 Route::get('/Home/index', "HomeController@index")->name('Home.index');
 //个人资料
 Route::get('/PersonalProfile/index', "PersonalProfileController@index")->name('PersonalProfile.index');
 //商铺分类
-Route::get('/ShopCate/index', "ShopCateController@index")->name('ShopCate.index');
+
+Route::resource('ShopCate', "ShopCateController");
+Route::get('/ShopCate/createSub/{id}', "ShopCateController@createSub")->name('ShopCate.createSub');
+Route::post('/ShopCate/changeOne', "ShopCateController@changeOne")->name('ShopCate.changeOne');
+Route::get('/ShopCate/goodsManage/{id}', "ShopCateController@goodsManage")->name('ShopCate.goodsManage');
+Route::post('/ShopCate/cancelCate', "ShopCateController@cancelCate")->name('ShopCate.cancelCate');
+
 //商品管理
 Route::get('/GoodsManage/index', "GoodsManageController@index")->name('GoodsManage.index');
 Route::get('/GoodsManage/create', "GoodsManageController@create")->name('GoodsManage.create');
 Route::post('/GoodsManage/store', "GoodsManageController@store")->name('GoodsManage.store');
+Route::post('/GoodsManage/getCate', "GoodsManageController@getCate")->name('GoodsManage.getCate');
+
+Route::post('/GoodsManage/batchOp', "GoodsManageController@batchUp")->name('GoodsManage.batchUp');//批量上架
+Route::post('/GoodsManage/batchDown', "GoodsManageController@batchDown")->name('GoodsManage.batchDown');//批量下架
+Route::post('/GoodsManage/batchCate', "GoodsManageController@batchCate")->name('GoodsManage.batchCate');//批量分类
+Route::post('/GoodsManage/op', "GoodsManageController@op")->name('GoodsManage.op');
+Route::get('/GoodsManage/exportData', "GoodsManageController@exportData")->name('GoodsManage.exportData');
+Route::get('/GoodsManage/edit/{id}', "GoodsManageController@edit")->name('GoodsManage.edit');
+//
 
 Route::post('/Uploader/uploadImg', "Tools\UploaderController@uploadImg")->name('Uploader.uploadImg');
+Route::post('/Uploader/uploadVideo', "Tools\UploaderController@uploadVideo")->name('Uploader.uploadVideo');
 Route::post('/Uploader/deleteUploadImg', "Tools\UploaderController@deleteUploadImg")->name('Uploader.deleteUploadImg');
+
 
 
 
