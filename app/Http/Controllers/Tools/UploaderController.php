@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Tools;
 
+use App\Http\Controllers\Base\BaseController;
 use App\UploadFile;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
-class UploaderController extends Controller
+class UploaderController extends BaseController
 {
     //上传图片
     function uploadImg(Request $request){
-        $file=$request->file('img');
+        $file=$request->file('file');
         if ($file->isValid()){
             //文件类型
             $file_types=["image/jpeg","image/png"];
@@ -30,7 +30,42 @@ class UploaderController extends Controller
 
             //存储文件信息
             $UploadFile=UploadFile::create([
-                'uid'=>1,
+                'uid'=>session('user')->uid,
+                'file_path'=>$path,
+                'original_name'=>$file->getClientOriginalName(),
+            ]);
+
+
+            return response()->json(['url'=>Storage::url($path),'id'=>$UploadFile->id,'status'=>200]);
+
+            //
+        }
+
+
+    }
+
+    //上传视频
+    function uploadVideo(Request $request){
+        $file=$request->file('file');
+        if ($file->isValid()){
+            //文件类型
+            $file_types=["video/mp4"];
+            $file_type=$file->getMimeType();
+            if (!in_array($file_type,$file_types)){
+                return response()->json(['error'=>'只支持mp4','status'=>1]);
+            }
+            //文件大小
+            $file_size=$file->getSize();
+            if($file_size>1024*1024*2*10){
+                return response()->json(['error'=>'视频小于20M','status'=>2]);
+            }
+            //按天存储
+            $path='upload'.'/'.date('Y-m-d');
+            $path=$file->store($path);
+
+            //存储文件信息
+            $UploadFile=UploadFile::create([
+                'uid'=>session('user')->uid,
                 'file_path'=>$path,
                 'original_name'=>$file->getClientOriginalName(),
             ]);

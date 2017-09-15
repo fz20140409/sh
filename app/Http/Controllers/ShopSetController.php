@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 
 /**
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
  * Class ShopSetController
  * @package App\Http\Controllers
  */
-class ShopSetController extends Controller
+class ShopSetController extends BaseController
 {
     function index()
     {
