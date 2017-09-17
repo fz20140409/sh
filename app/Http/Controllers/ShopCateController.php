@@ -68,7 +68,7 @@ class ShopCateController extends BaseController
         //同名检测
         $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('user')->uid, 'enabled' => 1])->count();
         if (!empty($count)) {
-            return response()->json(['status' => 1, 'msg' => '不允许同名']);
+            return response()->json(['status' => 1, 'msg' => '不允许同名','enabled'=>1]);
         }
         $insert = [
             'sc_name' => $catename,
@@ -129,7 +129,7 @@ class ShopCateController extends BaseController
         //同名检测
         $count = DB::table('merchant_shopclassify')->where(['sc_name' => $catename, 'sr_id' => session('user')->uid, 'enabled' => 1])->where('cat_id', '!=', $id)->count();
         if (!empty($count)) {
-            return response()->json(['status' => 1, 'msg' => '不允许同名']);
+            return response()->json(['status' => 1, 'msg' => '不允许同名', 'enabled' => 1]);
         }
 
         $update = [
