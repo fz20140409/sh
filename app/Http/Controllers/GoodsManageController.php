@@ -568,10 +568,12 @@ class GoodsManageController extends BaseController
     }
 
     function exportData(){
-        $data=DB::table('goods')->where(['sr_id'=>session('user')->uid])->select('goods_name as 商品标题','goods_smallname as 商品简称','price as 价格','sell_count as 销量','kc as 库存','img as 商品图片url')->get()->toArray();
+        $data=DB::table('goods')->where(['sr_id'=>session('user')->uid,'enabled'=>1])->select('goods_name as 商品标题','goods_smallname as 商品简称','price as 价格','sell_count as 销量','kc as 库存','img as 商品图片url')->get()->toArray();
         if(!empty($data)){
             $data=objectToArray($data);
             ExcelController::export('商品数据','商品',$data);
+        }else{
+            return redirect()->route('GoodsManage.index');
         }
     }
 
