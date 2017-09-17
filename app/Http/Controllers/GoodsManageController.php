@@ -138,7 +138,7 @@ class GoodsManageController extends BaseController
         $cate3 = $request->cate3;//三级
 
         //应用标题
-        $yy_title = $request->yy_title;
+        $yy_title = isset($request->yy_title)?$request->yy_title:"";
         //应用视频
         $vd_url = $request->vd_url;
 
