@@ -28,7 +28,7 @@
                                         <th width="13%">分类</th>
                                         <th>状态</th>
                                         <th>创建时间</th>
-                                        <th width="15%">操作</th>
+                                        <th>操作</th>
                                     </tr>
                                     @foreach($info as $k=>$v)
                                     <tr>

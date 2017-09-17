@@ -55,7 +55,7 @@
                     <div class="inner">
                         <h3>65</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>xxx</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -67,7 +67,7 @@
         </div>
         <!-- /.row -->
         <!-- Main row -->
-        <div class="row">
+        {{--<div class="row">
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
                 <!-- Custom tabs (Charts with tabs)-->
@@ -281,7 +281,7 @@
 
             </section>
             <!-- right col -->
-        </div>
+        </div>--}}
         <!-- /.row (main row) -->
 
     </section>

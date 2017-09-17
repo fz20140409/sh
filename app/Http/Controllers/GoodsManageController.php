@@ -169,21 +169,27 @@ class GoodsManageController extends BaseController
             //促销商品
             if (isset($cu_xiao)) {
                 $goods['is_cuxiao'] = 1;
+            }else{
+                $goods['is_cuxiao'] = 0;
             }
             //新品推荐
             if (isset($new)) {
                 $goods['is_new'] = 1;
+            }else{
+                $goods['is_new'] = 0;
             }
             //热销推荐
             if (isset($hot)) {
                 $goods['is_hot'] = 1;
+            }else{
+                $goods['is_hot'] = 0;
             }
 
 
 
         if (isset($file) && count($file) > 0) {
             //商品主图，默认第一张
-            $goods['img'] = $file[0];
+            $goods['img'] = explode(';',$file[0])[1];
         }
 
         DB::beginTransaction();
@@ -341,6 +347,8 @@ class GoodsManageController extends BaseController
                 'createtime'=>date('Y-m-d H:i:s'),
                 'enabled'=>1,
             ];
+
+
             if(isset($g_id)){
                 //编辑
                 $goods_img['good_id']=$g_id;
@@ -352,7 +360,9 @@ class GoodsManageController extends BaseController
 
             }
             foreach ($file as $img){
-                $goods_img['attr_value']=$img;
+                list($uf_id,$url)=explode(';',$img);
+                $goods_img['uf_id']=$uf_id;
+                $goods_img['attr_value']=$url;
                 DB::table('goods_attr')->insert($goods_img);
             }
 
@@ -474,10 +484,13 @@ class GoodsManageController extends BaseController
         }
         //商品详情
         $goods_attr=DB::table('goods_attr')->select('attr_type','attr_value')->where(['good_id'=>$id,'enabled'=>1,'attr_name'=>'descrip'])->get();
+        //商品图片
+        $sql="SELECT * FROM `goods_attr` as a RIGHT JOIN upload_files as b ON a.uf_id=b.id WHERE a.good_id=$id and a.attr_name='banner'";
+        $imgs=DB::select($sql);
 
 
 
-        return view('goods_manage.create', compact('brands', 'shopclassify', 'unitspec','id','goods','goods_apply','goods_spec','goods_shopclassify','goods_category_rela','goods_attr'));
+        return view('goods_manage.create', compact('brands', 'shopclassify', 'unitspec','id','goods','goods_apply','goods_spec','goods_shopclassify','goods_category_rela','goods_attr','imgs'));
 
 
     }
@@ -524,7 +537,33 @@ class GoodsManageController extends BaseController
 
 
     }
-    function destroy(){
+    //删除商品
+    //todo
+    function destroy(Request $request){
+        $id=$request->id;
+        if(!isset($id)||empty($id)){
+            return response()->json(['status'=>1,'msg'=>'缺少参数']);
+        }
+        //商品主表
+        DB::table('goods')->where('goods_id',$id)->update(['enabled'=>0]);
+        //店铺分类
+        DB::table('goods_shopclassify')->where('good_id',$id)->update(['enabled'=>0]);
+
+
+
+        return response()->json(['status'=>200,'msg'=>'删除成功']);
+    }
+    //批量删除
+    //todo
+    function batchDestroy(Request $request){
+        $ids=$request->ids;
+        if(!isset($ids)||empty($ids)){
+            return response()->json(['status'=>1,'msg'=>'缺少参数']);
+        }
+        DB::table('goods')->whereIn('goods_id',$ids)->update(['enabled'=>0]);
+        //店铺分类
+        DB::table('goods_shopclassify')->whereIn('good_id',$ids)->update(['enabled'=>0]);
+        return response()->json(['status'=>200,'msg'=>'删除成功']);
 
     }
 

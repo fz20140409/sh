@@ -60,7 +60,7 @@
                                         <th width="13%">分类</th>
                                         <th>状态</th>
                                         <th>创建时间</th>
-                                        <th width="15%">操作</th>
+                                        <th width="10%">操作</th>
                                     </tr>
                                     @foreach($info as $k=>$v)
                                     <tr>
@@ -100,16 +100,18 @@
                                         <td>@if($v->state==1) 上架 @elseif($v->state==3)下架 @else @endif</td>
                                         <td>{{$v->createtime}}</td>
                                         <td class="op">
-                                            <a href="{{route('GoodsManage.edit',$v->goods_id)}}">编辑</a>
-                                            <a>@if($v->state==1) <a href="javascript:op(1,'{{$v->goods_id}}')">不卖了</a> @elseif($v->state==3) <a href="javascript:op(2,'{{$v->goods_id}}')">继续卖</a> @else @endif</a>
-                                            <a>删除</a>
-                                            <a class="ff">
-                                                分享
+                                            <p><a href="{{route('GoodsManage.edit',$v->goods_id)}}">编辑</a></p>
+                                            <p><a>@if($v->state==1) <a href="javascript:op(1,'{{$v->goods_id}}')">不卖了</a> @elseif($v->state==3) <a href="javascript:op(2,'{{$v->goods_id}}')">继续卖</a> @else @endif</a></p>
+
+                                            <p><a href="javascript:del({{$v->goods_id}})">删除</a></p>
+                                            <div class="ff">
+                                                <a class="" >分享</a>
                                                 <div style="display: none" class="text-center fx">
                                                     {!! QrCode::size(150)->color(255,0,255)->generate('http://101.37.68.23/admin/login') !!}
                                                 </div>
 
-                                            </a>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     @endforeach
@@ -345,6 +347,29 @@
             });
 
         }
+
+        function del(id) {
+            layer.confirm('商品删除后不能恢复，确认删除？', {
+                btn: ['确认', '取消']
+            },function () {
+                $.ajax({
+                    url: '{{route('GoodsManage.destroy')}}',
+                    type: 'post',
+                    data: {'id':id},
+                    success: function (response) {
+                        if(response.status==200){
+                            layer.msg(response.msg);
+                            location.reload();
+                        }else {
+                            layer.msg(response.msg);
+                        }
+
+                    }
+                });
+            });
+
+
+        }
         function batch_op(id) {
             if(id==2){
                 //批量上架
@@ -393,11 +418,31 @@
                         });
                     });
 
+                } else {layer.msg('请选中商品');}};
+            if(id==4){
+                //批量删除
+                $cbs = $('table input[class="minimal"]:checked');
+                if ($cbs.length > 0) {
+                    layer.confirm('商品批量删除后不能恢复，确认删除？', {
+                        btn: ['确认', '取消']
+                    },function () {
+                        $.ajax({
+                            url: '{{route('GoodsManage.batchDestroy')}}',
+                            type: 'post',
+                            data: $("#ids").serialize(),
+                            success: function (response) {
+                                if(response.status==200){
+                                    layer.msg(response.msg);
+                                    location.reload();
+                                }else {
+                                    layer.msg(response.msg);
+                                }
+
+                            }
+                        });
+                    });
+
                 } else {layer.msg('请选中商品');}}
-
-
-
-
         }
     </script>
 @endsection
@@ -412,9 +457,9 @@
     #batch button{
         margin-left: 20px;
     }
-    .op a{
+    /*.op a{
         margin-right: 6px;
-    }
+    }*/
     .arrow{
         margin-left: 3px;
     }
