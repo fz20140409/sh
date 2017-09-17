@@ -31,10 +31,8 @@ Route::get('/ShopCate/createSub/{id}', "ShopCateController@createSub")->name('Sh
 Route::post('/ShopCate/changeOne', "ShopCateController@changeOne")->name('ShopCate.changeOne');
 Route::get('/ShopCate/goodsManage/{id}', "ShopCateController@goodsManage")->name('ShopCate.goodsManage');
 Route::post('/ShopCate/cancelCate', "ShopCateController@cancelCate")->name('ShopCate.cancelCate');
-Route::post('/ShopCate/order', "ShopCate2Controller@order")->name('ShopCate.order');
-//商铺分类2
-/*Route::resource('ShopCate2', "ShopCate2Controller");
-Route::post('/ShopCate2/order', "ShopCate2Controller@order")->name('ShopCate2.order');*/
+Route::post('/ShopCate/order', "ShopCateController@order")->name('ShopCate.order');
+
 
 //商品管理
 Route::get('/GoodsManage/index', "GoodsManageController@index")->name('GoodsManage.index');
