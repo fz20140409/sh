@@ -31,6 +31,10 @@ Route::get('/ShopCate/createSub/{id}', "ShopCateController@createSub")->name('Sh
 Route::post('/ShopCate/changeOne', "ShopCateController@changeOne")->name('ShopCate.changeOne');
 Route::get('/ShopCate/goodsManage/{id}', "ShopCateController@goodsManage")->name('ShopCate.goodsManage');
 Route::post('/ShopCate/cancelCate', "ShopCateController@cancelCate")->name('ShopCate.cancelCate');
+Route::post('/ShopCate/order', "ShopCate2Controller@order")->name('ShopCate.order');
+//商铺分类2
+/*Route::resource('ShopCate2', "ShopCate2Controller");
+Route::post('/ShopCate2/order', "ShopCate2Controller@order")->name('ShopCate2.order');*/
 
 //商品管理
 Route::get('/GoodsManage/index', "GoodsManageController@index")->name('GoodsManage.index');
@@ -44,6 +48,8 @@ Route::post('/GoodsManage/batchCate', "GoodsManageController@batchCate")->name('
 Route::post('/GoodsManage/op', "GoodsManageController@op")->name('GoodsManage.op');
 Route::get('/GoodsManage/exportData', "GoodsManageController@exportData")->name('GoodsManage.exportData');
 Route::get('/GoodsManage/edit/{id}', "GoodsManageController@edit")->name('GoodsManage.edit');
+Route::post('/GoodsManage/destroy', "GoodsManageController@destroy")->name('GoodsManage.destroy');
+Route::post('/GoodsManage/batchDestroy', "GoodsManageController@batchDestroy")->name('GoodsManage.batchDestroy');
 //
 
 Route::post('/Uploader/uploadImg', "Tools\UploaderController@uploadImg")->name('Uploader.uploadImg');

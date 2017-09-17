@@ -39,10 +39,52 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">商品图片</label>
                                     <div class="col-sm-8">
-                                        <div style="border:1px solid #d2d6de" class="dropzone" id="upload_dropzone">
+                                       {{-- <div style="border:1px solid #d2d6de" class="dropzone" id="upload_dropzone">
                                             <div class="am-text-success dz-message">
                                                 <img src="/img/image.png">
                                             </div>
+                                        </div>--}}
+
+                                        <div id="container">
+                                            @if(isset($id))
+                                                @foreach($imgs as $img)
+                                                    <div id="img_{{$img->uf_id}}" class="col-xs-6 col-md-2"><a href="{{$img->attr_value}}"><img width="100%" src="{{$img->attr_value}}" title="点我查看大图"></a> <a href="javascript:img_del('{{$img->uf_id}}')"><p style="text-align: center">删除</p></a></div>
+                                                    <input name="file[]" id="file_{{$img->uf_id}}" type="hidden" value="{{$img->uf_id}};{{$img->attr_value}}">
+                                                @endforeach
+
+                                                @endif
+                                           {{-- <div class="for-img col-sm-2">
+                                                <img width="100%" src="/img/img.png">
+                                            </div>
+
+                                            <div class="img_add col-sm-2">
+                                                <input type="file" name="file" id="img">
+                                                <img width="100%" src="/img/add.png">
+                                            </div>--}}
+                                            {{--<div class="col-xs-6 col-md-2">
+                                                <a href=""><img width="100%" src="/img/11.jpg" title="点我查看大图"></a>
+                                                <a href="javascript:img_del(1)"><p style="text-align: center">删除</p></a>
+                                            </div>--}}
+                                            {{--<div class="col-xs-6 col-md-2">
+                                                <img width="100%" src="/img/33.jpg" alt="...">
+                                                <a><p style="text-align: center">删除</p></a>
+                                            </div>
+                                            <div class="col-xs-6 col-md-2">
+                                                <img width="100%" src="/img/22.jpg" alt="...">
+                                                <a><p style="text-align: center">删除</p></a>
+                                            </div>
+                                            <div class="col-xs-6 col-md-2">
+                                                <img width="100%" src="/img/22.jpg" alt="...">
+                                                <a><p style="text-align: center">删除</p></a>
+                                            </div>--}}
+                                            <div class="col-xs-6 col-md-2" id="btn_add">
+                                                <div style="padding: 15px;" class="thumbnail">
+                                                    <input type="file" name="file" id="img" multiple>
+                                                    <img  width="100%" src="/img/add.png" alt="...">
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +328,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">根据商品标题和图片</label>
                                     <div class="col-sm-4">
-                                        <button type="button" class="btn btn-default form-control">自动生成商品详情</button>
+                                        <button onclick="auto_gen()" type="button" class="btn btn-default form-control">自动生成商品详情</button>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -432,7 +474,7 @@
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
                     <a href="javascript:add_wz()" >
-                        <img src="/img/menu2.png">
+                        <img src="/img/wz.png">
                     </a>
                     <div style="text-align:center" class="caption">文字</div>
                 </div>
@@ -452,7 +494,7 @@
                 <div class="thumbnail">
                     <a href="javascript:void(0)" >
                         <input name="file" type="file" id="menu_vd">
-                        <img src="/img/menu2.png">
+                        <img src="/img/vedio.png">
                     </a>
                     <div style="text-align:center" class="caption">视频</div>
                 </div>
@@ -461,7 +503,7 @@
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
                     <a href="javascript:add_hr()" >
-                        <img src="/img/menu2.png">
+                        <img src="/img/hr.png">
                     </a>
                     <div style="text-align:center" class="caption">分割线</div>
                 </div>
@@ -514,6 +556,66 @@
             $(this).find(".toolBar").hide()
         });
 
+        function auto_gen() {
+        var test=$('#module .for-menu').length;
+               if(test){
+                   var index=layer.confirm('该操作会清空当前的商品详情，并用最新的商品图标和标题生成新的商品详情。确定自动生成商品详情？', {
+                       btn: ['确认','取消']
+                   }, function(){
+                       $('#module .menu_btn').each(function () {
+
+                           var o=$(this).attr('order');
+                           arr=arr.filter(function(item){
+                               return item.count!=o
+                           });
+                       })
+                       $('#module').empty();
+                       console.log(arr);
+                       layer.close(index);
+                       tt();
+                   });
+               }
+
+            tt()
+
+
+
+
+        }
+
+        function tt() {
+
+            var goods_name=$('input[name="goods_name"]').val();
+            if(goods_name!=""){
+                $('#module').append(' <div class="for-menu">' +
+                    '<textarea  order='+count+' class="menu_text menu_btn">'+goods_name+'</textarea>' +
+                    '<div class="toolBar">' +
+                    '<span class="menu-add"></span>'+
+                    '<span class="menu-up"></span>'+
+                    '<span class="menu-down"></span>'+
+                    '<span class="menu-del"></span>'+
+                    '</div>'+
+                    '</div>');
+                arr.push({'type':1,'value':goods_name,"count":count});
+                console.log(arr);
+                count=count+1;
+            };
+            var files=$('input[name="file[]"]');
+            if(files.length>0){
+                for(var i=0;i<files.length;i++){
+                    var url=files[i].value.split(';')[1];
+                    $('#module').append(' <div class="for-menu"><img class="menu_btn" order="'+count+'" width="100%" src="'+url+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
+                    arr.push({'type':2,'value':url,"count":count});
+                    console.log(arr);
+                    count=count+1;
+
+                }
+
+            }
+
+
+        }
+
 
         //商品详情
         function add_wz() {
@@ -526,7 +628,7 @@
                        '<span class="menu-del"></span>'+
                      '</div>'+
                 '</div>');
-            arr.push({'type':1,'value':'111',"count":count});
+            arr.push({'type':1,'value':'',"count":count});
             console.log(arr);
             count=count+1;
         }
@@ -557,9 +659,8 @@
             var p=$(this).closest('.for-menu');
             if(p.is($('.for-menu:first'))){
 
-                alert('第一位置');
+                layer.msg('无法上移');
             }else {
-                alert('上移动');
                 var prev=p.prev();
                 var aa=p.find('.menu_btn').attr('order');
                 var bb=prev.find('.menu_btn').attr('order');
@@ -590,9 +691,8 @@
             var p=$(this).closest('.for-menu');
             if(p.is($('.for-menu:last'))){
 
-                alert('最后位置');
+                layer.msg('无法下移');
             }else {
-                alert('下移动');
                 var next=p.next();
                 var aa=p.find('.menu_btn').attr('order');
                 var bb=next.find('.menu_btn').attr('order');
@@ -789,6 +889,45 @@
             }
 
         });
+
+        //商品图片
+        $('#img').fileupload({
+            url: "{{route('Uploader.uploadImg')}}",
+            dataType: 'json',
+            done: function (e, data) {
+                if (data.result.status == 200) {
+                    $('#btn_add').before('<div id="img_'+data.result.id+'" class="col-xs-6 col-md-2"><a href="'+data.result.url+'"><img width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a href="javascript:img_del('+data.result.id+')"><p style="text-align: center">删除</p></a></div>')
+                    $('#upload_form').append('<input name="file[]" id="file_'+data.result.id+'" type="hidden" value="'+ data.result.id+';'+data.result.url+'">')
+                }else {
+                    layer.msg(data.result.error);
+                }
+            }
+
+        });
+        
+        function img_del(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('Uploader.deleteUploadImg')}}',
+                data: {"id":id},
+                success:function (response) {
+                    //上传失败,展示错误
+                    if(response.error){
+                        layer.msg(response.error);
+                        return false;
+                    }
+                    if(response.status=200){
+                        $("#img_"+id).remove();
+                        $("#file_"+id).remove();
+                        layer.msg('删除成功');
+                    }
+
+
+                }
+            });
+            
+        }
+
         $('#fileupload').fileupload({
             url: "{{route('Uploader.uploadVideo')}}",
             dataType: 'json',
@@ -1140,11 +1279,11 @@
 
         })
     </script>
-    <script>
+    {{--<script>
         $(function () {
             var myDropzone=upload_img("{{route('Uploader.uploadImg')}}", '{{route("Uploader.deleteUploadImg")}}', $("#upload_dropzone"), $('#upload_form'), ".jpg,.jpeg,.png,.gif", 1, 10);
         });
-    </script>
+    </script>--}}
     <script>
         $(function () {
             //初始化显示基本信息
@@ -1392,8 +1531,8 @@ $(".select2").select2();
         }
         #menu_file,#menu_vd{
             z-index: 99;
-            width: 60px;
-            height: 75px;
+            width: 100%;
+            height: 100%;
             border: 1px solid red;
             position: absolute;
             top: 0;
@@ -1401,7 +1540,21 @@ $(".select2").select2();
             opacity: 0;
             cursor: pointer;
         }
-
+        .img_add{
+            border: 1px dashed #d2d6de;width: 64px;height:64px;padding: 5px;
+            position: relative;
+            margin-right: 5px;
+        }
+        .for-img{
+            border: 1px dashed #d2d6de;width: 64px;height:64px;
+            position: relative;
+            margin-right: 5px;
+            padding: 5px;
+        }
+        #img{
+            width: 100%;
+            height: 100%;position: absolute;left: 0;top: 0;opacity: 0;
+        }
 
     </style>
 @endsection()
