@@ -26,12 +26,12 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
            {{-- <li class="header">MAIN NAVIGATION</li>--}}
-            <li class="active"><a href="{{route("Home.index")}}"><i class="fa fa-home"></i> <span>主页</span></a></li>
+            <li id="home"><a href="{{route("Home.index")}}"><i class="fa fa-home"></i> <span>主页</span></a></li>
             {{--<li><a href="{{route("PersonalProfile.index")}}"><i class="fa fa-user"></i> <span>个人资料</span></a></li>
             <li><a href="{{route('ShopCate2.index')}}"><i class="fa fa-cog"></i> <span>网店设置</span></a></li>--}}
-            <li><a href="{{route("GoodsManage.create")}}"><i class="fa fa-plus"></i> <span>增加商品</span></a></li>
-            <li><a href="{{route("GoodsManage.index")}}"><i class="fa fa-shopping-bag"></i> <span>商品管理</span></a></li>
-            <li><a href="{{route("ShopCate.index")}}"><i class="fa fa-book"></i> <span>商铺分类</span></a></li>
+            <li id="add_goods"><a href="{{route("GoodsManage.create")}}"><i class="fa fa-plus"></i> <span>增加商品</span></a></li>
+            <li id="goods_mg"><a href="{{route("GoodsManage.index")}}"><i class="fa fa-shopping-bag"></i> <span>商品管理</span></a></li>
+            <li id="shop_cate"><a href="{{route("ShopCate.index")}}"><i class="fa fa-book"></i> <span>商铺分类</span></a></li>
             {{--<li class="active treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>

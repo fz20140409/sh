@@ -140,6 +140,9 @@
         $('.arrow a:eq(3)').addClass('arrow_active');
         @endif
     </script>
+    <script>
+        $('.sidebar-menu #shop_cate').addClass('active');
+    </script>
     @endsection
 @section('css')
     <style>

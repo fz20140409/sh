@@ -57,6 +57,7 @@ class LoginController extends Controller
     {
         //删除登录数据
         $request->session()->forget('user');
+        $request->session()->forget('uid');
         return view('login.login');
     }
 
