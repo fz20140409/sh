@@ -150,7 +150,7 @@ class ShopCateController extends BaseController
     {
 
         //有无子分类
-        $info = DB::table('merchant_shopclassify')->where('parent_id', $id)->pluck('cat_id')->toArray();
+        $info = DB::table('merchant_shopclassify')->where(['parent_id'=>$id,'enabled'=>1])->pluck('cat_id')->toArray();
         if (!isset($request->flag)) {
             if (!empty($info)) {
                 return response()->json(['status' => 1, 'msg' => '其下子分类不会被删除，且会变成一级分类?', 'flag' => 1]);
