@@ -26,16 +26,18 @@ class LoginController extends Controller
         $phone=$request->phone;
         $code=$request->code;
 
-        $url = config('custom.api_url')."/user/loginv2";
+        $url = config('custom.api_url')."/seller/login";
         $data=[
             'param'=>['phone'=>$phone,'code'=>$code]
         ];
         $data=json_decode(curl_request($url,true,$data));
+
         if($data->code==0){
             //成功
-            $info=$data->data[0];
+            $info=$data->data->userInfo[0];
             //存入session
             $request->session()->put('user',$info);
+            $request->session()->put('uid',$info->sr_id);
             //重定向主页
             return redirect()->route('Home.index');
 
