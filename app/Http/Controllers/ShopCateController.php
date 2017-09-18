@@ -23,7 +23,7 @@ class ShopCateController extends BaseController
     public function index()
     {
 
-        $info = DB::table('merchant_shopclassify as a')->select(DB::raw('(select count(*) from goods_shopclassify WHERE sc_id=a.cat_id and enabled=1) as count'),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => session('user')->uid, 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
+        $info = DB::table('merchant_shopclassify as a')->select(DB::raw('(select count(*) from goods_shopclassify WHERE sc_id=a.cat_id and enabled=1) as count'),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => session('uid'), 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
         //转换
         if (!empty($info)) {
             $info = objectToArray($info);
@@ -42,14 +42,14 @@ class ShopCateController extends BaseController
      */
     public function create()
     {
-        /*  $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('user')->uid, 'parent_id' => 0, 'enabled' => 1])->get();
+        /*  $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('uid'), 'parent_id' => 0, 'enabled' => 1])->get();
           return response()->json(['data' => $info]);*/
     }
 
     //添加子分类
     public function createSub($id)
     {
-        $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('user')->uid, 'parent_id' => 0, 'enabled' => 1])->get();
+        $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('uid'), 'parent_id' => 0, 'enabled' => 1])->get();
         $shopclassify = DB::table('merchant_shopclassify')->where('cat_id', $id)->select('sc_name', 'parent_id', 'cat_id')->first();
         return response()->json(['data' => $info, 'shopclassify' => $shopclassify]);
     }
@@ -66,7 +66,7 @@ class ShopCateController extends BaseController
         $pid = isset($request->pid)?$request->pid:0;
         $catename = $request->catename;
         //同名检测
-        $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('user')->uid, 'enabled' => 1])->count();
+        $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->count();
         if (!empty($count)) {
             return response()->json(['status' => 1, 'msg' => '不允许同名','enabled'=>1]);
         }
@@ -75,7 +75,7 @@ class ShopCateController extends BaseController
             'parent_id' => $pid,
             'createtime' => date('Y-m-d H:i:s'),
             'enabled' => 1,
-            'sr_id' => session('user')->uid,
+            'sr_id' => session('uid'),
         ];
 
         if ($pid == 0) {
@@ -109,7 +109,7 @@ class ShopCateController extends BaseController
      */
     public function edit($id)
     {
-        /* $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('user')->uid, 'parent_id' => 0, 'enabled' => 1])->get();
+        /* $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('uid'), 'parent_id' => 0, 'enabled' => 1])->get();
          $shopclassify = DB::table('merchant_shopclassify')->where('cat_id', $id)->select('sc_name', 'parent_id', 'cat_id')->first();
          return response()->json(['data' => $info, 'shopclassify' => $shopclassify]);*/
 
@@ -127,7 +127,7 @@ class ShopCateController extends BaseController
         //
         $catename = $request->catename;
         //同名检测
-        $count = DB::table('merchant_shopclassify')->where(['sc_name' => $catename, 'sr_id' => session('user')->uid, 'enabled' => 1])->where('cat_id', '!=', $id)->count();
+        $count = DB::table('merchant_shopclassify')->where(['sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->where('cat_id', '!=', $id)->count();
         if (!empty($count)) {
             return response()->json(['status' => 1, 'msg' => '不允许同名', 'enabled' => 1]);
         }
@@ -194,7 +194,7 @@ class ShopCateController extends BaseController
 
         $goods=DB::table('goods as a');
         $where_link=[];
-        $where=['a.enabled'=>1,'a.sr_id'=>session('user')->uid];
+        $where=['a.enabled'=>1,'a.sr_id'=>session('uid')];
         //销量排序
         $sell_count=isset($request->sell_count)?$request->sell_count:-1;
         if($sell_count==1){

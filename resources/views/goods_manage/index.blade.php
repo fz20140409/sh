@@ -108,7 +108,7 @@
                                                 <a class="" >分享</a>
                                                 <div style="display: none;position: absolute;top: -80px; left: -110px" class="text-center fx">
                                                     <?php
-                                                        $uid=session('user')->uid;
+                                                        $uid=session('uid');
                                                         $url="http://ks.fjmaimaimai.com:8588/shareNew/#/ProDetails?uid=$uid&good_id=$v->goods_id"
                                                     ?>
                                                     {!! QrCode::size(100)->color(255,0,255)->generate($url) !!}

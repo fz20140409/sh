@@ -21,7 +21,7 @@ class GoodsManageController extends BaseController
     {
         $goods=DB::table('goods as a');
         $where_link=[];
-        $where=['a.enabled'=>1,'a.sr_id'=>session('user')->uid];
+        $where=['a.enabled'=>1,'a.sr_id'=>session('uid')];
         //销量排序
         $sell_count=isset($request->sell_count)?$request->sell_count:-1;
         if($sell_count==1){
@@ -64,7 +64,7 @@ class GoodsManageController extends BaseController
         $sql='a.*,(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as cate';
         $info=$goods->select(DB::raw($sql))->where($where)->orderBy('a.createtime','desc')->paginate(10);
 
-        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('user')->uid, 'enabled' => 1])->get()->toArray();
+        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('uid'), 'enabled' => 1])->get()->toArray();
         if (!empty($shopclassify)) {
             //转换
             $shopclassify = objectToArray($shopclassify);
@@ -83,7 +83,7 @@ class GoodsManageController extends BaseController
         //品牌
         $brands = DB::table('cfg_brand')->get();
         //店铺分类
-        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('user')->uid, 'enabled' => 1])->get()->toArray();
+        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('uid'), 'enabled' => 1])->get()->toArray();
         if (!empty($shopclassify)) {
             //转换
             $shopclassify = objectToArray($shopclassify);
@@ -144,7 +144,7 @@ class GoodsManageController extends BaseController
         $vd_url = $request->vd_url;
 
         $goods = [
-            'sr_id' => session('user')->uid,
+            'sr_id' => session('uid'),
             'bid' => $bid,
             'goods_smallname' => $goods_smallname,
             'goods_name' => $goods_name,
@@ -417,7 +417,7 @@ class GoodsManageController extends BaseController
             if(!isset($g_id)){
                 //
                 $merchant_good_rela=[
-                    'mid'=>session('user')->uid,
+                    'mid'=>session('uid'),
                     'enabled'=>1,
                     'create_time'=>date('Y-m-d H:i:s'),
                     'gid'=>$goods_id
@@ -459,7 +459,7 @@ class GoodsManageController extends BaseController
         //品牌
         $brands = DB::table('cfg_brand')->get();
         //店铺分类
-        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('user')->uid, 'enabled' => 1])->get()->toArray();
+        $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('uid'), 'enabled' => 1])->get()->toArray();
         if (!empty($shopclassify)) {
             //转换
             $shopclassify = objectToArray($shopclassify);
@@ -500,7 +500,7 @@ class GoodsManageController extends BaseController
         if(!isset($ids)||empty($ids)){
             return response()->json(['status'=>1,'msg'=>'请选择商品']);
         }
-        DB::table('goods')->where(['sr_id'=>session('user')->uid])->whereIn('goods_id',$ids)->update(['state'=>1]);
+        DB::table('goods')->where(['sr_id'=>session('uid')])->whereIn('goods_id',$ids)->update(['state'=>1]);
 
         return response()->json(['status'=>200,'msg'=>'操作成功']);
 
@@ -512,7 +512,7 @@ class GoodsManageController extends BaseController
         if(!isset($ids)||empty($ids)){
             return response()->json(['status'=>1,'msg'=>'请选择商品']);
         }
-        DB::table('goods')->where(['sr_id'=>session('user')->uid])->whereIn('goods_id',$ids)->update(['state'=>3]);
+        DB::table('goods')->where(['sr_id'=>session('uid')])->whereIn('goods_id',$ids)->update(['state'=>3]);
 
         return response()->json(['status'=>200,'msg'=>'操作成功']);
     }
@@ -524,13 +524,13 @@ class GoodsManageController extends BaseController
         }
         if($op==1){
             //不卖了
-            DB::table('goods')->where(['sr_id'=>session('user')->uid])->where('goods_id',$id)->update(['state'=>3]);
+            DB::table('goods')->where(['sr_id'=>session('uid')])->where('goods_id',$id)->update(['state'=>3]);
             return response()->json(['status'=>200,'msg'=>'操作成功']);
 
         }
         if($op==2){
             //继续卖
-            DB::table('goods')->where(['sr_id'=>session('user')->uid])->where('goods_id',$id)->update(['state'=>1]);
+            DB::table('goods')->where(['sr_id'=>session('uid')])->where('goods_id',$id)->update(['state'=>1]);
             return response()->json(['status'=>200,'msg'=>'操作成功']);
 
         }
@@ -549,7 +549,7 @@ class GoodsManageController extends BaseController
         //店铺分类
         DB::table('goods_shopclassify')->where('good_id',$id)->update(['enabled'=>0]);
         //商户和商品关联表
-        DB::table('merchant_good_rela')->where(['gid'=>$id,'mid'=>session('user')->uid])->update(['enabled'=>0]);
+        DB::table('merchant_good_rela')->where(['gid'=>$id,'mid'=>session('uid')])->update(['enabled'=>0]);
 
 
 
@@ -567,13 +567,13 @@ class GoodsManageController extends BaseController
         DB::table('goods_shopclassify')->whereIn('good_id',$ids)->update(['enabled'=>0]);
 
         //商户和商品关联表
-        DB::table('merchant_good_rela')->whereIn('gid',$ids)->where(['mid'=>session('user')->uid])->update(['enabled'=>0]);
+        DB::table('merchant_good_rela')->whereIn('gid',$ids)->where(['mid'=>session('uid')])->update(['enabled'=>0]);
         return response()->json(['status'=>200,'msg'=>'删除成功']);
 
     }
 
     function exportData(){
-        $data=DB::table('goods')->where(['sr_id'=>session('user')->uid,'enabled'=>1])->select('goods_name as 商品标题','goods_smallname as 商品简称','price as 价格','sell_count as 销量','kc as 库存','img as 商品图片url')->get()->toArray();
+        $data=DB::table('goods')->where(['sr_id'=>session('uid'),'enabled'=>1])->select('goods_name as 商品标题','goods_smallname as 商品简称','price as 价格','sell_count as 销量','kc as 库存','img as 商品图片url')->get()->toArray();
         if(!empty($data)){
             $data=objectToArray($data);
             ExcelController::export('商品数据','商品',$data);
