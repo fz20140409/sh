@@ -104,10 +104,14 @@
                                             <p><a>@if($v->state==1) <a href="javascript:op(1,'{{$v->goods_id}}')">不卖了</a> @elseif($v->state==3) <a href="javascript:op(2,'{{$v->goods_id}}')">继续卖</a> @else @endif</a></p>
 
                                             <p><a href="javascript:del({{$v->goods_id}})">删除</a></p>
-                                            <div class="ff">
+                                            <div class="ff" style="position: relative;">
                                                 <a class="" >分享</a>
-                                                <div style="display: none" class="text-center fx">
-                                                    {!! QrCode::size(150)->color(255,0,255)->generate('http://101.37.68.23/admin/login') !!}
+                                                <div style="display: none;position: absolute;top: -80px; left: -110px" class="text-center fx">
+                                                    <?php
+                                                        $uid=session('user')->uid;
+                                                        $url="http://ks.fjmaimaimai.com:8588/shareNew/#/ProDetails?uid=$uid&good_id=$v->goods_id"
+                                                    ?>
+                                                    {!! QrCode::size(100)->color(255,0,255)->generate($url) !!}
                                                 </div>
 
                                             </div>

@@ -474,7 +474,7 @@
         </div>
 
     </section>
-    <section id="menu" style="display: none">
+    <section id="menu" style="display: none" class="popBox">
         <div class="row">
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
@@ -1504,6 +1504,9 @@ $(".select2").select2();
             width: 100%;
             height: 100%;position: absolute;left: 0;top: 0;opacity: 0;
         }
+      .popBox{
+          padding:20px;
+      }
 
     </style>
 @endsection()
