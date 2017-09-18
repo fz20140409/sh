@@ -48,8 +48,13 @@
                                         <div id="container">
                                             @if(isset($id))
                                                 @foreach($imgs as $img)
-                                                    <div id="img_{{$img->uf_id}}" class="col-xs-6 col-md-2"><a href="{{$img->attr_value}}"><img width="100%" src="{{$img->attr_value}}" title="点我查看大图"></a> <a href="javascript:img_del('{{$img->uf_id}}')"><p style="text-align: center">删除</p></a></div>
-                                                    <input name="file[]" id="file_{{$img->uf_id}}" type="hidden" value="{{$img->uf_id}};{{$img->attr_value}}">
+                                                    <?php
+                                                    $arr=explode('/',$img->attr_value);
+                                                    $arr=$arr[count($arr)-1];
+                                                    $arr=explode('.',$arr)[0];
+                                                    ?>
+                                                    <div id="img_{{$arr}}" class="col-xs-6 col-md-2"><a href="{{$img->attr_value}}"><img width="100%" src="{{$img->attr_value}}" title="点我查看大图"></a> <a href="javascript:img_del('{{$arr}}')"><p style="text-align: center">删除</p></a></div>
+                                                    <input name="file[]" id="file_{{$arr}}" type="hidden" value="{{$img->attr_value}}">
                                                 @endforeach
 
                                                 @endif
@@ -556,8 +561,10 @@
             $(this).find(".toolBar").hide()
         });
 
+
+
         function auto_gen() {
-        var test=$('#module .for-menu').length;
+                var test=$('#module .for-menu').length;
                if(test){
                    var index=layer.confirm('该操作会清空当前的商品详情，并用最新的商品图标和标题生成新的商品详情。确定自动生成商品详情？', {
                        btn: ['确认','取消']
@@ -572,19 +579,18 @@
                        $('#module').empty();
                        console.log(arr);
                        layer.close(index);
-                       tt();
+                       tttt();
                    });
                }
 
-            tt()
+            tttt();
 
 
 
 
         }
 
-        function tt() {
-
+        function tttt() {
             var goods_name=$('input[name="goods_name"]').val();
             if(goods_name!=""){
                 $('#module').append(' <div class="for-menu">' +
@@ -603,7 +609,7 @@
             var files=$('input[name="file[]"]');
             if(files.length>0){
                 for(var i=0;i<files.length;i++){
-                    var url=files[i].value.split(';')[1];
+                    var url=files[i].value;
                     $('#module').append(' <div class="for-menu"><img class="menu_btn" order="'+count+'" width="100%" src="'+url+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
                     arr.push({'type':2,'value':url,"count":count});
                     console.log(arr);
@@ -615,6 +621,8 @@
 
 
         }
+
+
 
 
         //商品详情
@@ -721,16 +729,7 @@
 
 
 
-       /* $('.menu-del').each(function () {
 
-            $(this).click(function () {
-                var p=$(this).closest('.for-menu');
-                var o=p.find('.menu_btn').attr('order');
-                arr.splice(o, 1);
-                console.log(arr);
-                p.remove();
-            })
-        })*/
         
         //展示菜单
         function show_menu() {
@@ -823,30 +822,14 @@
             " width='480' height='400' ></embed>");
 
         //form表单，添加隐藏
-        $("#upload_form").append('<input id="vd_url" name="vd_url" type="hidden" value="{{$goods_apply->uf_id}};{{$goods_apply->videourl}}">');
+        $("#upload_form").append('<input id="vd_url" name="vd_url" type="hidden" value="{{$goods_apply->videourl}}">');
         //删除按钮设置事件
         $("#vd_del").click(function () {
-                $.ajax({
-                    url: '{{route('Uploader.deleteUploadImg')}}',
-                    data: {'id': '{{$goods_apply->uf_id}}'},
-                    type: 'post',
-                    success: function (response) {
-                        //上传失败,展示错误
-                        if (response.error) {
-                            layer.msg(response.error);
-                            return false;
-                        }
-                        if (response.status = 200) {
-                            $("#progress").hide();
-                            $('#vd').remove();
-                            $('#vd_url').remove();
-                            layer.msg('删除成功');
-                            $("#vd_del").unbind('click');
-                        }
-
-                    }
-                })
-
+            $("#progress").hide();
+            $('#vd').remove();
+            $('#vd_url').remove();
+            layer.msg('删除成功');
+            $("#vd_del").unbind('click');
             }
         );
 
@@ -896,8 +879,10 @@
             dataType: 'json',
             done: function (e, data) {
                 if (data.result.status == 200) {
-                    $('#btn_add').before('<div id="img_'+data.result.id+'" class="col-xs-6 col-md-2"><a href="'+data.result.url+'"><img width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a href="javascript:img_del('+data.result.id+')"><p style="text-align: center">删除</p></a></div>')
-                    $('#upload_form').append('<input name="file[]" id="file_'+data.result.id+'" type="hidden" value="'+ data.result.id+';'+data.result.url+'">')
+                    var a=purl(data.result.url);
+                    var b="'"+a+"'";
+                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2"><a href="'+data.result.url+'"><img width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a  onclick=img_del('+b+')><p style="text-align: center">删除</p></a></div>')
+                    $('#upload_form').append('<input name="file[]" id="file_'+a+'" type="hidden" value="'+data.result.url+'">')
                 }else {
                     layer.msg(data.result.error);
                 }
@@ -906,25 +891,9 @@
         });
         
         function img_del(id) {
-            $.ajax({
-                type: 'POST',
-                url: '{{route('Uploader.deleteUploadImg')}}',
-                data: {"id":id},
-                success:function (response) {
-                    //上传失败,展示错误
-                    if(response.error){
-                        layer.msg(response.error);
-                        return false;
-                    }
-                    if(response.status=200){
-                        $("#img_"+id).remove();
-                        $("#file_"+id).remove();
-                        layer.msg('删除成功');
-                    }
-
-
-                }
-            });
+            $("#img_"+id).remove();
+            $("#file_"+id).remove();
+            layer.msg('删除成功');
             
         }
 
@@ -944,39 +913,19 @@
                             " allowscriptaccess='always'  allowfullscreen='true' wmode='opaque'" +
                             " width='480' height='400'></embed>");
                     }
-
-
-
                     //form表单，添加隐藏
-                    $("#upload_form").append('<input id="vd_url" name="vd_url" type="hidden" value="' + data.result.id + ';' + data.result.url + '">');
+                    $("#upload_form").append('<input id="vd_url" name="vd_url" type="hidden" value="'+ data.result.url + '">');
                     //删除按钮设置事件
                     $("#vd_del").click(function () {
-                                $.ajax({
-                                    url: '{{route('Uploader.deleteUploadImg')}}',
-                                    data: {'id': data.result.id},
-                                    type: 'post',
-                                    success: function (response) {
-                                        //上传失败,展示错误
-                                        if (response.error) {
-                                            layer.msg(response.error);
-                                            return false;
-                                        }
-                                        if (response.status = 200) {
-                                            $("#progress").hide();
-                                            $('#vd').remove();
-                                            $('#vd_url').remove();
-                                            layer.msg('删除成功');
-                                            $("#vd_del").unbind('click');
-                                        }
-
-                                    }
-                                })
-
+                        $("#progress").hide();
+                        $('#vd').remove();
+                        $('#vd_url').remove();
+                        layer.msg('删除成功');
+                        $("#vd_del").unbind('click');
                         }
                     );
 
                 } else {
-
                     $('#error').show();
                     $('#error').text(data.result.error);
                     $("#progress").hide();
@@ -1165,14 +1114,14 @@
                                 }
                                 ;
                                 $("#cate2").append(e2);
-                                @if(isset($id)&&count($goods_category_rela)>2)
+                                @if(isset($id)&&count($goods_category_rela)>=2)
                                     $("#cate2 option[value='{{$goods_category_rela[1]}}']").attr('selected','selected');
                                     @endif
 
                                 $.ajax({
                                     type: 'POST',
                                     url: '{{route('GoodsManage.getCate')}}',
-                                    @if(isset($id)&&count($goods_category_rela)>3)
+                                    @if(isset($id)&&count($goods_category_rela)>=2)
                                     data: {'id': '{{$goods_category_rela[1]}}'},
                                     @else
                                     data: {'id': result2.data[0].cat_id},
@@ -1187,7 +1136,7 @@
                                             }
                                             ;
                                             $("#cate3").append(e3);
-                                            @if(isset($id)&&count($goods_category_rela)>3)
+                                            @if(isset($id)&&count($goods_category_rela)>=3)
                                                   $("#cate3 option[value='{{$goods_category_rela[2]}}']").attr('selected','selected');
                                             @endif
 

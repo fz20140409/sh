@@ -97,6 +97,7 @@ class GoodsManageController extends BaseController
 
     function store(Request $request)
     {
+
         //商品id
         $g_id= $request->goods_id;
         //商品详情
@@ -189,7 +190,8 @@ class GoodsManageController extends BaseController
 
         if (isset($file) && count($file) > 0) {
             //商品主图，默认第一张
-            $goods['img'] = explode(';',$file[0])[1];
+            //$goods['img'] = explode(';',$file[0])[1];
+            $goods['img'] = $file[0];
         }
 
         DB::beginTransaction();
@@ -206,16 +208,13 @@ class GoodsManageController extends BaseController
             //---------------------------------------------商品应用(一条)
             //商品应用
             if(isset($vd_url)){
-                $uf_id=explode(';',$vd_url)[0];
-                $url=explode(';',$vd_url)[1];
-
                 $goods_apply=[
                     'title'=>$yy_title,
-                    'videourl'=>$url,
-                    'videoimg'=>$url,//todo
+                    'videourl'=>$vd_url,
+                    'videoimg'=>$vd_url,//todo
                     'createtime'=>date('Y-m-d H:i:s'),
                     'enabled'=>1,
-                    'uf_id'=>$uf_id
+
 
                 ];
                 //有上传应用
@@ -360,9 +359,8 @@ class GoodsManageController extends BaseController
 
             }
             foreach ($file as $img){
-                list($uf_id,$url)=explode(';',$img);
-                $goods_img['uf_id']=$uf_id;
-                $goods_img['attr_value']=$url;
+                //list($uf_id,$url)=explode(';',$img);
+                $goods_img['attr_value']=$img;
                 DB::table('goods_attr')->insert($goods_img);
             }
 
@@ -464,12 +462,6 @@ class GoodsManageController extends BaseController
         $goods=DB::table('goods')->where('goods_id',$id)->first();
         //商品应用
         $goods_apply=DB::table('goods_apply')->where('good_id',$id)->first();
-        if(!empty($goods_apply)){
-            $count=DB::table('upload_files')->where('id',$goods_apply->uf_id)->count();
-            if(empty($count)){
-                DB::table('goods_apply')->where('good_id',$id)->delete();
-            }
-        }
         //商品规格
         $goods_spec=DB::table('goods_spec')->where('good_id',$id)->get();
         //店铺分类
@@ -485,11 +477,8 @@ class GoodsManageController extends BaseController
         //商品详情
         $goods_attr=DB::table('goods_attr')->select('attr_type','attr_value')->where(['good_id'=>$id,'enabled'=>1,'attr_name'=>'descrip'])->get();
         //商品图片
-        $sql="SELECT * FROM `goods_attr` as a RIGHT JOIN upload_files as b ON a.uf_id=b.id WHERE a.good_id=$id and a.attr_name='banner'";
+        $sql="SELECT * FROM `goods_attr`  WHERE good_id=$id and attr_name='banner'";
         $imgs=DB::select($sql);
-
-
-
         return view('goods_manage.create', compact('brands', 'shopclassify', 'unitspec','id','goods','goods_apply','goods_spec','goods_shopclassify','goods_category_rela','goods_attr','imgs'));
 
 
