@@ -413,6 +413,17 @@ class GoodsManageController extends BaseController
                 $goods_category_rela['cat_id']=$cate3;
                 DB::table('goods_category_rela')->insert($goods_category_rela);
             }
+            //---------------------------------------------商户和商品关联表
+            if(!isset($g_id)){
+                //
+                $merchant_good_rela=[
+                    'mid'=>session('user')->uid,
+                    'enabled'=>1,
+                    'create_time'=>date('Y-m-d H:i:s'),
+                    'gid'=>$goods_id
+                ];
+                DB::table('merchant_good_rela')->insert($merchant_good_rela);
+            }
 
             DB::commit();
             if(isset($g_id)){
@@ -537,6 +548,8 @@ class GoodsManageController extends BaseController
         DB::table('goods')->where('goods_id',$id)->update(['enabled'=>0]);
         //店铺分类
         DB::table('goods_shopclassify')->where('good_id',$id)->update(['enabled'=>0]);
+        //商户和商品关联表
+        DB::table('merchant_good_rela')->where(['gid'=>$id,'mid'=>session('user')->uid])->update(['enabled'=>0]);
 
 
 
@@ -552,6 +565,9 @@ class GoodsManageController extends BaseController
         DB::table('goods')->whereIn('goods_id',$ids)->update(['enabled'=>0]);
         //店铺分类
         DB::table('goods_shopclassify')->whereIn('good_id',$ids)->update(['enabled'=>0]);
+
+        //商户和商品关联表
+        DB::table('merchant_good_rela')->whereIn('gid',$ids)->where(['mid'=>session('user')->uid])->update(['enabled'=>0]);
         return response()->json(['status'=>200,'msg'=>'删除成功']);
 
     }
