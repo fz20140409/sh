@@ -286,3 +286,8 @@
 
     </section>
     @endsection
+@section('js')
+    <script>
+        $('.sidebar-menu #home').addClass('active');
+    </script>
+    @endsection

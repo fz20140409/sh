@@ -1391,6 +1391,9 @@ $(".select2").select2();
 
 
     </script>
+    <script>
+        $('.sidebar-menu #add_goods').addClass('active');
+    </script>
 @endsection
 @section('css')
     <link rel="stylesheet" href="/plugs/jQuery-File-Upload/css/jquery.fileupload.css">

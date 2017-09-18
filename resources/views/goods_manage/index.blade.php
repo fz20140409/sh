@@ -449,6 +449,9 @@
                 } else {layer.msg('请选中商品');}}
         }
     </script>
+    <script>
+        $('.sidebar-menu #goods_mg').addClass('active');
+    </script>
 @endsection
 @section('css')
     <link rel="stylesheet" href="/adminlte/plugins/iCheck/all.css">
