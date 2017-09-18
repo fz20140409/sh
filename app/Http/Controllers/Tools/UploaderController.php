@@ -29,14 +29,15 @@ class UploaderController extends BaseController
             $path=$file->store($path);
 
             //存储文件信息
-            $UploadFile=UploadFile::create([
+            /*$UploadFile=UploadFile::create([
                 'uid'=>session('user')->uid,
                 'file_path'=>$path,
                 'original_name'=>$file->getClientOriginalName(),
-            ]);
+            ]);*/
 
 
-            return response()->json(['url'=>Storage::url($path),'id'=>$UploadFile->id,'status'=>200]);
+            //return response()->json(['url'=>Storage::url($path),'id'=>$UploadFile->id,'status'=>200]);
+            return response()->json(['url'=>Storage::url($path),'status'=>200]);
 
             //
         }
@@ -64,14 +65,14 @@ class UploaderController extends BaseController
             $path=$file->store($path);
 
             //存储文件信息
-            $UploadFile=UploadFile::create([
+            /*$UploadFile=UploadFile::create([
                 'uid'=>session('user')->uid,
                 'file_path'=>$path,
                 'original_name'=>$file->getClientOriginalName(),
-            ]);
+            ]);*/
 
 
-            return response()->json(['url'=>Storage::url($path),'id'=>$UploadFile->id,'status'=>200]);
+            return response()->json(['url'=>Storage::url($path),'status'=>200]);
 
             //
         }

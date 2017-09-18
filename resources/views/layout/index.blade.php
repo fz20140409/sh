@@ -305,6 +305,13 @@
             }
         });
     });
+
+    function purl(str) {
+        var test=str.split("/");
+        test=test[test.length -1];
+        test=test.split(".");
+        return test[0];
+    }
 </script>
 @yield('js')
 
