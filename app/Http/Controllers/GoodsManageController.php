@@ -83,6 +83,7 @@ class GoodsManageController extends BaseController
         //品牌
         $brands = DB::table('cfg_brand')->get();
         //店铺分类
+
         $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('uid'), 'enabled' => 1])->orderBy('orderby','asc')->get()->toArray();
         if (!empty($shopclassify)) {
             //转换
