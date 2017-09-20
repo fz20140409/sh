@@ -53,7 +53,7 @@
                                                     $arr=$arr[count($arr)-1];
                                                     $arr=explode('.',$arr)[0];
                                                     ?>
-                                                    <div id="img_{{$arr}}" class="col-xs-6 col-md-2"><a href="{{$img->attr_value}}"><img width="100%" src="{{$img->attr_value}}" title="点我查看大图"></a> <a href="javascript:img_del('{{$arr}}')"><p style="text-align: center">删除</p></a></div>
+                                                    <div id="img_{{$arr}}" class="col-xs-6 col-md-2 img_c"><a href="{{$img->attr_value}}"><img height="120px" width="100%" src="{{$img->attr_value}}" title="点我查看大图"></a> <a href="javascript:img_del('{{$arr}}')"><p class="img_p" style="text-align: center">删除</p></a></div>
                                                     <input name="file[]" id="file_{{$arr}}" type="hidden" value="{{$img->attr_value}}">
                                                 @endforeach
 
@@ -881,7 +881,7 @@
                 if (data.result.status == 200) {
                     var a=purl(data.result.url);
                     var b="'"+a+"'";
-                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2"><a href="'+data.result.url+'"><img width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a  onclick=img_del('+b+')><p style="text-align: center">删除</p></a></div>')
+                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2 img_c"><a href="'+data.result.url+'"><img height="120px" width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a  onclick=img_del('+b+')><p class="img_p" style="text-align: center">删除</p></a></div>')
                     $('#upload_form').append('<input name="file[]" id="file_'+a+'" type="hidden" value="'+data.result.url+'">')
                 }else {
                     layer.msg(data.result.error);
@@ -1510,6 +1510,20 @@ $(".select2").select2();
       .popBox{
           padding:20px;
       }
+        .img_c{
+            width: 150px;
+            height: 150px;
+            position: relative;
+
+        }
+        .img_p{
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            height: 18px;
+            bottom:0;
+            left: 0;
+        }
 
     </style>
 @endsection()

@@ -98,7 +98,7 @@ class GoodsManageController extends BaseController
 
     function store(Request $request)
     {
-        
+
 
         //商品id
         $g_id= $request->goods_id;
