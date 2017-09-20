@@ -119,7 +119,7 @@
     </section>
     <!--添加分类-->
     <section id="create" style="display: none;">
-        <form id="form">
+        <form id="form2">
             <div class="box-body">
                 <div class="form-group">
                     <label>分类名称</label>
@@ -155,14 +155,14 @@
                 $("#create_cancel").unbind('click');
                 $("#create_cancel").click(function () {
                     //清空表单
-                    document.getElementById('form').reset();
+                    document.getElementById('form2').reset();
                     layer.close(index);
                 });
                 $("#create_save").unbind('click');
                 $("#create_save").click(function () {
                     $.ajax({
                         url: "{{route('ShopCate.store')}}",
-                        data: $("#create form").serialize()+"&pid="+pid,
+                        data: $("#form2").serialize()+"&pid="+pid,
                         type: 'POST',
                         success: function (response) {
                             if (response.status == 0) {
@@ -197,14 +197,14 @@
             $("#create_cancel").unbind('click');
             $("#create_cancel").click(function () {
                 //清空表单
-                document.getElementById('form').reset();
+                document.getElementById('form2').reset();
                 layer.close(index);
             });
             $("#create_save").unbind('click');
             $("#create_save").click(function () {
                 $.ajax({
                     url: "{{route('ShopCate.store')}}",
-                    data: $("#create form").serialize(),
+                    data: $("#form2").serialize(),
                     type: 'POST',
                     success: function (response) {
                         if (response.status == 0) {
@@ -270,40 +270,54 @@
         $('.edit_name').each(function () {
             $(this).click(function () {
                var pid=$(this).closest('.table-tr').find('input[name="ids[]"]').val();
+              $.ajax({
+                  url:"{{route('ShopCate.index')}}/"+pid+"/edit",
+                  type:'get',
+                  success:function (response) {
+                      if(response.status==0){
 
-                var index = layer.open({
-                    area: ['400px', ''],
-                    type: 1 //Page层类型
-                    , title: false,
-                    closeBtn: 0
-                    , shade: 0.6 //遮罩透明度
-                    , maxmin: false //允许全屏最小化
-                    , anim: 1 //0-6的动画形式，-1不开启
-                    , content: $("#create")
-                });
-                $("#create_cancel").click(function () {
-                    //清空表单
-                    document.getElementById('form').reset();
-                    layer.close(index);
-                });
-                $("#create_save").click(function () {
-                    $.ajax({
-                        url: "{{route('ShopCate.index')}}/"+pid,
-                        data: $("#create form").serialize(),
-                        type: 'PUT',
-                        success: function (response) {
-                            if (response.status == 0) {
-                                layer.close(index);
-                                location.reload();
-                                layer.msg(response.msg);
+                          $('input[name="catename"]').val(response.data.sc_name);
+                          var index = layer.open({
+                              area: ['400px', ''],
+                              type: 1 //Page层类型
+                              , title: false,
+                              closeBtn: 0
+                              , shade: 0.6 //遮罩透明度
+                              , maxmin: false //允许全屏最小化
+                              , anim: 1 //0-6的动画形式，-1不开启
+                              , content: $("#create")
+                          });
+                          $("#create_cancel").unbind('click');
+                          $("#create_cancel").click(function () {
+                              //清空表单
+                              document.getElementById('form2').reset();
+                              layer.close(index);
+                          });
+                          $("#create_save").unbind('click');
+                          $("#create_save").click(function () {
+                              $.ajax({
+                                  url: "{{route('ShopCate.index')}}/"+pid,
+                                  data: $("#form2").serialize(),
+                                  type: 'PUT',
+                                  success: function (response) {
+                                      if (response.status == 0) {
+                                          layer.close(index);
+                                          location.reload();
+                                          layer.msg(response.msg);
 
-                            } else {
-                                layer.msg(response.msg);
-                            }
-                        }
+                                      } else {
+                                          layer.msg(response.msg);
+                                      }
+                                  }
 
-                    });
-                });
+                              });
+                          });
+                      }
+                  }
+
+              });
+
+
 
             })
         })

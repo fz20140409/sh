@@ -109,9 +109,8 @@ class ShopCateController extends BaseController
      */
     public function edit($id)
     {
-        /* $info = DB::table('merchant_shopclassify')->select('cat_id', 'sc_name')->where(['sr_id' => session('uid'), 'parent_id' => 0, 'enabled' => 1])->get();
-         $shopclassify = DB::table('merchant_shopclassify')->where('cat_id', $id)->select('sc_name', 'parent_id', 'cat_id')->first();
-         return response()->json(['data' => $info, 'shopclassify' => $shopclassify]);*/
+         $info = DB::table('merchant_shopclassify')->select('sc_name')->where(['cat_id'=>$id])->first();
+         return response()->json(['data' => $info,'status' => 0]);
 
     }
 
