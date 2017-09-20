@@ -545,8 +545,11 @@
                     var value="{{$item->attr_value}}";
                     arr.push({'type':{{$item->attr_type}},'value':value,"count":{{$k}}});
                     count=count+1;
+                 @else
+                     arr.push({'type':1,'value':'',"count":count});
                  @endif
                 @endforeach
+                console.log(arr);
 
         @endif
 
