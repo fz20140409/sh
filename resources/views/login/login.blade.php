@@ -46,7 +46,7 @@
             <div class="form-group form-inline">
                 <input  name="code" type="text" class="form-control" placeholder="短信验证码">
                 <span>
-                  <button id="for-code" onclick="getCode()" class=" btn btn-default" type="button">获取验证码</button>
+                  <button id="for-code" onclick="getCode()" class=" btn btn-default pull-right" type="button">获取验证码</button>
                 </span>
             </div>
 
