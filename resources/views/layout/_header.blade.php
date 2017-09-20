@@ -212,22 +212,21 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">--}}
-                        <img src="@if(session('user')) {{session('user')->uicon}} @endif" class="user-image" alt="User Image">
-                        <span class="hidden-xs">@if(session('user')) {{session('user')->IDname}} @endif</span>
+                        <img src="@if(session('user')&&session('user')->uicon) {{session('user')->uicon}} @else /adminlte/dist/img/user2-160x160.jpg  @endif" class="user-image" alt="User Image">
+                        <span class="hidden-xs">@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else {{session('user')->phone}} @endif</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             {{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}
-                            <img src="@if(session('user')) {{session('user')->uicon}} @endif" class="img-circle" alt="User Image">
+                            <img src="@if(session('user')&&session('user')->uicon) {{session('user')->uicon}} @else /adminlte/dist/img/user2-160x160.jpg @endif" class="img-circle" alt="User Image">
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <small>注册时间:@if(session('user')&&session('user')->createtime) {{session('user')->createtime}} @endif</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                        {{--<li class="user-body">
                             <div class="row">
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Followers</a>
@@ -240,7 +239,7 @@
                                 </div>
                             </div>
                             <!-- /.row -->
-                        </li>
+                        </li>--}}
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">

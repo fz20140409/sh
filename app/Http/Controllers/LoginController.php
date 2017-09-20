@@ -32,15 +32,19 @@ class LoginController extends Controller
         ];
         $data=json_decode(curl_request($url,true,$data));
 
-        if($data->code==0){
-            //成功
-            $info=$data->data->userInfo[0];
-            //存入session
-            $request->session()->put('user',$info);
-            $request->session()->put('uid',$info->sr_id);
-            //重定向主页
-            return redirect()->route('Home.index');
 
+        if($data->code==0){
+            if($data->data->flag==1){
+                return redirect()->back()->with('error','未注册用户,请前往买家版注册');
+            }else{
+                //成功
+                $info=$data->data->userInfo[0];
+                //存入session
+                $request->session()->put('user',$info);
+                $request->session()->put('uid',$info->sr_id);
+                //重定向主页
+                return redirect()->route('Home.index');
+            }
         }else{
             return redirect()->back()->with('error',$data->msg);
 

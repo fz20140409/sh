@@ -5,10 +5,10 @@
         <div class="user-panel">
             <div class="pull-left image">
                 {{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}
-                <img src="@if(session('user')) {{session('user')->uicon}} @endif" class="img-circle" alt="User Image">
+                <img src="@if(session('user')&&session('user')->uicon) {{session('user')->uicon}} @else /adminlte/dist/img/user2-160x160.jpg  @endif" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>@if(session('user')) {{session('user')->IDname}} @endif</p>
+                <p>@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else  {{session('user')->phone}} @endif</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
