@@ -547,6 +547,7 @@
                     count=count+1;
                  @else
                      arr.push({'type':1,'value':'',"count":count});
+                     count=count+1;
                  @endif
                 @endforeach
                 console.log(arr);
@@ -792,6 +793,7 @@
                 $('.menu_text').each(function () {
                    var order= $(this).attr('order');
                    var v= $(this).val();
+                    console.log(v+"==="+order);
                    for(var  i=0;i<arr.length;i++){
                        if(arr[i].count==order){
                            arr[i].value=v;
