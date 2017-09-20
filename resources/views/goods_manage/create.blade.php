@@ -541,19 +541,16 @@
         var arr= [];
         @if(isset($id)&&!empty($goods_attr))
                 @foreach($goods_attr as $k=>$item)
-                  arr.push({'type':{{$item->attr_type}},'value':'{{$item->attr_value}}',"count":{{$k}}});
-                  count=count+1;
+                 @if($item->attr_type!=1)
+                    var value="{{$item->attr_value}}";
+                    arr.push({'type':{{$item->attr_type}},'value':value,"count":{{$k}}});
+                    count=count+1;
+                 @endif
                 @endforeach
 
         @endif
 
 
-//        $('.for-menu').hover(function () {
-//            alert(0123)
-//            $(this).find(".toolBar").show()
-//        },function () {
-//
-//        })
        $(document).on("mouseover",".for-menu",function(){
            $(this).find(".toolBar").show()
        })
