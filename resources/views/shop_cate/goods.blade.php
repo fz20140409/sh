@@ -85,9 +85,11 @@
 
                         </div>
                     </form>
+
                     <!--box-body-->
                     <!--box-footer-->
                     <div class="box-footer ">
+                        <a href="{{$previous}}" class="btn btn-default">返回</a>
                         <div style="float: right">
                             {{$info->appends($where_link)->links()}}
                         </div>
