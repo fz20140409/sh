@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use URL;
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -219,9 +220,9 @@ class ShopCateController extends BaseController
         $sql='a.*,(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id ) as cate';
         $info=$goods->select(DB::raw($sql))->where($where)->whereIn('a.goods_id',$ids)->orderBy('a.createtime','desc')->paginate(10);
 
+        $previous = URL::previous();
 
-
-        return view('shop_cate.goods',compact('info','sell_count','kc','where_link','id','merchant_shopclassify'));
+        return view('shop_cate.goods',compact('info','sell_count','kc','where_link','id','merchant_shopclassify','previous'));
 
 
     }
