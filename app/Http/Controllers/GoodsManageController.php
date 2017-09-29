@@ -61,8 +61,18 @@ class GoodsManageController extends BaseController
             $where_link['goods_name']=$goods_name;
         }
 
-        $sql='a.*,(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as cate';
+        $sql='a.*,(SELECT GROUP_CONCAT(g.sc_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as sc_id, (SELECT GROUP_CONCAT(f.parent_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as parent_id, (SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as cate';
         $info=$goods->select(DB::raw($sql))->where($where)->orderBy('a.createtime','desc')->paginate(10);
+
+        foreach ($info as $value) {
+            if (strpos($value->sc_id, ',') === false) {
+                continue;
+            }
+            $sc_id = explode(',', $value->sc_id);
+            $parent_id = explode(',', $value->parent_id);
+            $sc_ids = array_diff($sc_id, $parent_id);
+            $value->cate = DB::table('merchant_shopclassify')->whereIn('cat_id', $sc_ids)->value(DB::raw('group_concat(sc_name) as sc_name'));
+        }
 
         $shopclassify = DB::table('merchant_shopclassify')->select('cat_id as id', 'parent_id as pid', 'sc_name', 'createtime')->where(['sr_id' => session('uid'), 'enabled' => 1])->get()->toArray();
         if (!empty($shopclassify)) {
