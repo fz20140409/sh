@@ -66,6 +66,9 @@ class ShopCateController extends BaseController
 
         $pid = isset($request->pid)?$request->pid:0;
         $catename = $request->catename;
+        if (empty($catename)) {
+            return response()->json(['status' => 1, 'msg' => '分类名称不能为空']);
+        }
         //同名检测
         $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->count();
         if (!empty($count)) {
