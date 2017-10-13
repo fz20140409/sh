@@ -211,9 +211,13 @@ class GoodsManageController extends BaseController
             if(isset($g_id)){
                 //编辑
                 DB::table('goods')->where('goods_id',$g_id)->update($goods);
+                // 更改商品品牌关联
+                DB::table('goods_brand_rela')->where('goods_id', $g_id)->update(['bid' => $bid, 'enabled' => 1]);
             }else{
                 //新增
-                $goods_id=DB::table('goods')->insertGetId($goods);
+                $goods_id = DB::table('goods')->insertGetId($goods);
+                // 新增商品品牌关联
+                DB::table('goods_brand_rela')->insert(['goods_id' => $goods_id, 'bid' => $bid, 'enabled' => 1]);
             }
 
             //---------------------------------------------商品应用(一条)
