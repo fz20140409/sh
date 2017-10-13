@@ -205,19 +205,19 @@ class GoodsManageController extends BaseController
             $goods['img'] = $file[0];
         }
 
-        DB::beginTransaction();
-        try {
+//        DB::beginTransaction();
+//        try {
             //商品主表
             if(isset($g_id)){
                 //编辑
                 DB::table('goods')->where('goods_id',$g_id)->update($goods);
                 // 更改商品品牌关联
-                DB::table('goods_brand_rela')->where('goods_id', $g_id)->update(['bid' => $bid, 'enabled' => 1]);
+                DB::table('goods_brand_rela')->where('good_id', $g_id)->update(['bid' => $bid, 'enabled' => 1]);
             }else{
                 //新增
                 $goods_id = DB::table('goods')->insertGetId($goods);
                 // 新增商品品牌关联
-                DB::table('goods_brand_rela')->insert(['goods_id' => $goods_id, 'bid' => $bid, 'enabled' => 1]);
+                DB::table('goods_brand_rela')->insert(['good_id' => $goods_id, 'bid' => $bid, 'enabled' => 1]);
             }
 
             //---------------------------------------------商品应用(一条)
@@ -447,16 +447,16 @@ class GoodsManageController extends BaseController
                 return response()->json(['status'=>200,'msg'=>'添加成功']);
             }
 
-        } catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            DB::rollBack();
-            if(isset($g_id)){
-                return response()->json(['status'=>1,'msg'=>'更新失败']);
-            }else{
-                return response()->json(['status'=>1,'msg'=>'添加失败']);
-            }
-
-        }
+//        } catch (\Exception $exception) {
+//            Log::error($exception->getMessage());
+//            DB::rollBack();
+//            if(isset($g_id)){
+//                return response()->json(['status'=>1,'msg'=>'更新失败']);
+//            }else{
+//                return response()->json(['status'=>1,'msg'=>'添加失败']);
+//            }
+//
+//        }
 
 
 
