@@ -129,6 +129,9 @@ class ShopCateController extends BaseController
     {
         //
         $catename = $request->catename;
+        if (empty($catename)) {
+            return response()->json(['status' => 1, 'msg' => '分类名称不能为空']);
+        }
         //同名检测
         $count = DB::table('merchant_shopclassify')->where(['sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->where('cat_id', '!=', $id)->count();
         if (!empty($count)) {
