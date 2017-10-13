@@ -16,7 +16,11 @@ class LoginAuth
     public function handle($request, Closure $next)
     {
         if(!$request->session()->has('user')){
-            return redirect()->route('Login.showLogin');
+            if ($request->ajax()) {
+                return response()->json(['status' => 200, 'msg' => '未授权，请登录！']);
+            } else {
+                return redirect()->route('Login.showLogin');
+            }
         }
 
         return $next($request);
