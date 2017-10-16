@@ -861,7 +861,7 @@
             done: function (e, data) {
                 if (data.result.status == 200) {
 
-                    $('#module').append(' <div class="for-menu"><video controls="controls" class="menu_btn" order="'+count+'" width="100%" src="'+data.result.url+'"></video><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
+                    $('#module').append(' <div class="for-menu"><video controls="controls" class="menu_btn" style="padding-bottom: 45px;" order="'+count+'" width="100%" src="'+data.result.url+'" ></video><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
                     /*  arr[count]={'type':4,'value':''};*/
                     arr.push({'type':3,'value':data.result.url,"count":count});
                     console.log(arr);
