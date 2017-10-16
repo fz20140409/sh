@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use URL;
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,15 +22,20 @@ class ShopCateController extends BaseController
      */
     public function index()
     {
+        $good_ids = DB::table('goods')->where('sr_id', session('uid'))->where('enabled', 1)->pluck('goods_id')->toArray();
+        $good_ids = implode(',', $good_ids);
+
+        $data = DB::table('merchant_shopclassify as a')->select(DB::raw("(select count(*) from goods_shopclassify WHERE good_id in ({$good_ids}) and sc_id=a.cat_id and enabled=1) as count"),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => -1, 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
 
         $info = DB::table('merchant_shopclassify as a')->select(DB::raw('(select count(*) from goods_shopclassify WHERE sc_id=a.cat_id and enabled=1) as count'),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => session('uid'), 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
+
         //转换
         if (!empty($info)) {
             $info = objectToArray($info);
             $info = toLayer($info);
         }
 
-        return view('shop_cate.index',compact('info'));
+        return view('shop_cate.index',compact('data', 'info'));
 
 
     }
@@ -223,12 +227,10 @@ class ShopCateController extends BaseController
         }
 
 
-        $sql='a.*,(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id ) as cate';
+        $sql='a.*,(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and g.enabled = 1) as cate';
         $info=$goods->select(DB::raw($sql))->where($where)->whereIn('a.goods_id',$ids)->orderBy('a.createtime','desc')->paginate(10);
 
-        $previous = URL::previous();
-
-        return view('shop_cate.goods',compact('info','sell_count','kc','where_link','id','merchant_shopclassify','previous'));
+        return view('shop_cate.goods',compact('info','sell_count','kc','where_link','id','merchant_shopclassify'));
 
 
     }
@@ -240,7 +242,7 @@ class ShopCateController extends BaseController
             return response()->json(['status'=>1,'msg'=>'缺少参数']);
         }
 
-        DB::table('goods_shopclassify')->where(['good_id'=>$goods_id,'sc_id'=>$cate_id])->delete();
+        DB::table('goods_shopclassify')->where(['good_id'=>$goods_id,'sc_id'=>$cate_id])->update(['sc_id' => 12]);
         return response()->json(['status'=>200,'msg'=>'操作成功']);
 
     }

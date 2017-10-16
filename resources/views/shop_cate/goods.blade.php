@@ -68,8 +68,9 @@
                                         <td>@if($v->state==1) 上架 @elseif($v->state==3)下架 @else @endif</td>
                                         <td>{{$v->createtime}}</td>
                                         <td class="op">
-                                            <a href="javascript:cancel_cate('{{$v->goods_id}}')">取消分类</a>
-
+                                            @if($merchant_shopclassify->sc_name != '未分类')
+                                                <a href="javascript:cancel_cate('{{$v->goods_id}}')">取消分类</a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -89,7 +90,7 @@
                     <!--box-body-->
                     <!--box-footer-->
                     <div class="box-footer ">
-                        <a href="{{$previous}}" class="btn btn-default">返回</a>
+                        <a href="javascript:history.back();" class="btn btn-default">返回</a>
                         <div style="float: right">
                             {{$info->appends($where_link)->links()}}
                         </div>
