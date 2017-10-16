@@ -615,20 +615,32 @@ class GoodsManageController extends BaseController
         }
         DB::beginTransaction();
         try{
-            DB::table('goods_shopclassify')->where('good_id',$ids)->delete();
-            $insert=[
-                'level'=>0,
-                'createtime'=>date('Y-m-d H:i:s'),
-                'enabled'=>1,
-            ];
-            foreach ($ids as $id){
-                $insert['good_id']=$id;
-                foreach ($cat_ids as $cat_id){
-                    $insert['sc_id']=$cat_id;
-                    DB::table('goods_shopclassify')->insert($insert);
-                }
+            if(isset($cat_ids)){
+                $goods_shopclassify=[
+                    'createtime'=>date('Y-m-d H:i:s'),
+                    'enabled'=>1,
+                    'level'=>0
+                ];
 
+                DB::table('goods_shopclassify')->whereIn('good_id', $ids)->delete();
+
+                foreach ($ids as $g_id) {
+                    $goods_shopclassify['good_id'] = $g_id;
+
+                    foreach ($cat_ids as $cat_id){
+                        $goods_shopclassify['good_id']=$g_id;
+                        $goods_shopclassify['sc_id']=$cat_id;
+                        DB::table('goods_shopclassify')->insert($goods_shopclassify);
+                    }
+                }
+            }else{
+                foreach ($ids as $g_id) {
+                    // ‘未分类’的店铺分类 ID 为12 改记录不可删除、缺少、更改
+                    DB::table('goods_shopclassify')->where('good_id', $g_id)->update(['enabled' => 0]);
+                    DB::table('goods_shopclassify')->where('good_id', $g_id)->limit(1)->update(['sc_id' => 12, 'enabled' => 1]);
+                }
             }
+
             DB::commit();
             return response()->json(['status'=>200,'msg'=>'添加成功']);
         } catch (\Exception $exception) {
