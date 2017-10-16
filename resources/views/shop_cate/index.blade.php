@@ -27,6 +27,29 @@
                             <div class="th5">操作</div>
                         </div>
                         <form id="form">
+                            <div style="border: 1px solid #e4e4e4; margin-top: 5px;background: #f7f7f7;">
+
+                                <div class="table-tr">
+                                    <div class="th1">
+                                        <a class="flex">
+                                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                            <i style="display: none"  class="fa  fa-caret-right" aria-hidden="true"></i>
+                                        </a>{{$data[0]->sc_name}}
+                                    </div>
+                                    <div class="p_th2 th2">
+
+                                    </div>
+                                    <div class="th3">{{$data[0]->createtime}}</div>
+                                    <div class="th4">@if(empty($data[0]->child)) {{$data[0]->count}} @endif</div>
+                                    <div class="th5">
+                                        <a href="{{route('ShopCate.goodsManage',$data[0]->id)}}">商品管理</a>
+                                        {{--  <a href="javascript:show_sub('{{route('ShopCate.createSub',$it    em['cat_id'])}}','{{$item['cat_id']}}')">添加子分类</a>--}}
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                         @if(count($info) > 0)
                         @foreach($info as $item)
                             <div class="table-body">

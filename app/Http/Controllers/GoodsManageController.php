@@ -402,7 +402,17 @@ class GoodsManageController extends BaseController
                 }
             }else{
                 if (isset($g_id)){
-                    DB::table('goods_shopclassify')->where('good_id',$g_id)->delete();
+                    // ‘未分类’的店铺分类 ID 为12 改记录不可删除、缺少、更改
+                    DB::table('goods_shopclassify')->where('good_id', $g_id)->update(['enabled' => 0]);
+                    DB::table('goods_shopclassify')->where('good_id', $g_id)->limit(1)->update(['sc_id' => 12, 'enabled' => 1]);
+                } else {
+                    DB::table('goods_shopclassify')->insert([
+                        'sc_id' => 12,
+                        'good_id' => $goods_id,
+                        'createtime' => date('Y-m-d H:i:s'),
+                        'enabled' => 1,
+                        'level' => 0
+                    ]);
                 }
             }
             //---------------------------------------------品类
