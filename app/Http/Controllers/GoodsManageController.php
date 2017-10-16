@@ -61,7 +61,7 @@ class GoodsManageController extends BaseController
             $where_link['goods_name']=$goods_name;
         }
 
-        $sql='a.*,(SELECT GROUP_CONCAT(g.sc_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as sc_id, (SELECT GROUP_CONCAT(f.parent_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as parent_id, (SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 ) as cate';
+        $sql='a.*,(SELECT GROUP_CONCAT(g.sc_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as sc_id, (SELECT GROUP_CONCAT(f.parent_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as parent_id, (SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as cate';
         $info=$goods->select(DB::raw($sql))->where($where)->orderBy('a.createtime','desc')->paginate(10);
 
         foreach ($info as $value) {
