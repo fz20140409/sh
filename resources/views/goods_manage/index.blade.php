@@ -167,7 +167,7 @@
                                            value="{{$one['id']}}">{{$one['sc_name']}}
                                 </div>
                                 @if(!empty($one['child']))
-                                    <div class="cat_s" style="margin: 10px 0px">
+                                    <div class="cat_s" style="margin: 10px 20px">
                                         @foreach($one['child'] as $item)
                                             <input @if(isset($id)&&!empty($goods_shopclassify)&&in_array($item['id'],$goods_shopclassify)) checked @endif class="minimal" name="cat_ids[]" type="checkbox"
                                                    value="{{$item['id']}}">{{$item['sc_name']}}
