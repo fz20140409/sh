@@ -79,7 +79,9 @@
                                     <div class="th4">@if(empty($item['child'])) {{$item['count']}} @endif</div>
                                     <div class="th5">
                                         <a class="edit_name">修改名称</a>
+                                        @if(empty($item['child']))
                                         <a href="javascript:destroy('{{route('ShopCate.destroy',$item['id'])}}')">删除分类</a>
+                                        @endif
                                         @if(empty($item['child']))
                                             <a href="{{route('ShopCate.goodsManage',$item['id'])}}">商品管理</a>
                                         @endif
