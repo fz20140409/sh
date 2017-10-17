@@ -59,7 +59,7 @@
                                         <th>库存<span class="arrow"><a href="{{route('GoodsManage.index')}}?kc=1&state={{$state}}&goods_name={{$goods_name}}"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></a><a href="{{route('GoodsManage.index')}}?kc=2&state={{$state}}&goods_name={{$goods_name}}"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></a></span></th>
                                         <th width="13%">分类</th>
                                         <th>状态</th>
-                                        <th>创建时间</th>
+                                        <th>修改时间</th>
                                         <th width="10%">操作</th>
                                     </tr>
                                     @foreach($info as $k=>$v)

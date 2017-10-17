@@ -27,7 +27,7 @@
                                         <th>库存<span class="arrow"><a href="{{route('ShopCate.goodsManage',$id)}}?kc=1"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></a><a href="{{route('ShopCate.goodsManage',$id)}}?kc=2"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></a></span></th>
                                         {{--<th width="13%">分类</th>--}}
                                         <th>状态</th>
-                                        <th>创建时间</th>
+                                        <th>修改时间</th>
                                         <th>操作</th>
                                     </tr>
                                     @foreach($info as $k=>$v)

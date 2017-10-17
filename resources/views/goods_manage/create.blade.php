@@ -917,14 +917,6 @@
                     //隐藏错误
                     $('#error').hide();
                     //显示视频预览
-                   /* if($('#vd').length==1){
-                        //编辑
-                        $('#vd').attr('src',data.result.url);
-                    }else {
-                        $(".preview").html("<embed id='vd' src=" + data.result.url +
-                            " allowscriptaccess='always'  allowfullscreen='true' wmode='opaque'" +
-                            " width='480' height='400'></embed>");
-                    }*/
                     if($('#vd').length==1){
                         $('#vd').remove();
                     }
