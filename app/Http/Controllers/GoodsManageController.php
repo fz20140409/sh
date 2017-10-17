@@ -205,8 +205,8 @@ class GoodsManageController extends BaseController
             $goods['img'] = $file[0];
         }
 
-//        DB::beginTransaction();
-//        try {
+        DB::beginTransaction();
+        try {
             //商品主表
             if(isset($g_id)){
                 //编辑
@@ -457,16 +457,16 @@ class GoodsManageController extends BaseController
                 return response()->json(['status'=>200,'msg'=>'添加成功']);
             }
 
-//        } catch (\Exception $exception) {
-//            Log::error($exception->getMessage());
-//            DB::rollBack();
-//            if(isset($g_id)){
-//                return response()->json(['status'=>1,'msg'=>'更新失败']);
-//            }else{
-//                return response()->json(['status'=>1,'msg'=>'添加失败']);
-//            }
-//
-//        }
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+           DB::rollBack();
+           if(isset($g_id)){
+               return response()->json(['status'=>1,'msg'=>'更新失败']);
+           }else{
+               return response()->json(['status'=>1,'msg'=>'添加失败']);
+           }
+
+        }
 
 
 
