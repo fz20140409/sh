@@ -893,7 +893,7 @@
                 if (data.result.status == 200) {
                     var a=purl(data.result.url);
                     var b="'"+a+"'";
-                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2 img_c"><a href="'+data.result.url+'" target="_blank"><img height="120px" width="100%" src="'+data.result.url+'" title="点我查看大图"></a> <a  onclick=img_del('+b+')><p class="img_p" style="text-align: center">删除</p></a></div>')
+                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2 img_c"><img height="120px" width="100%" src="'+data.result.url+'" ><a  onclick=img_del('+b+')><p class="img_p" style="text-align: center">删除</p></a></div>')
                     $('#upload_form').append('<input name="file[]" id="file_'+a+'" type="hidden" value="'+data.result.url+'">')
                 }else {
                     layer.msg(data.result.error);
