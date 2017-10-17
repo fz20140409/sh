@@ -201,7 +201,7 @@ class ShopCateController extends BaseController
 
 
         $merchant_shopclassify=DB::table('merchant_shopclassify')->where('cat_id',$id)->first();
-        $ids=DB::table('goods_shopclassify')->where('sc_id',$id)->pluck('good_id')->toArray();
+        $ids=DB::table('goods_shopclassify')->where('sc_id',$id)->where('enabled', 1)->pluck('good_id')->toArray();
 
 
         $goods=DB::table('goods as a');
