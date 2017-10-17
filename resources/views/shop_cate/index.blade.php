@@ -34,15 +34,15 @@
                                         <a class="flex">
                                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                                             <i style="display: none"  class="fa  fa-caret-right" aria-hidden="true"></i>
-                                        </a>{{$data[0]->sc_name}}
+                                        </a>未分类
                                     </div>
                                     <div class="p_th2 th2">
 
                                     </div>
-                                    <div class="th3">{{$data[0]->createtime}}</div>
-                                    <div class="th4">@if(empty($data[0]->child)) {{$data[0]->count}} @endif</div>
+                                    <div class="th3"></div>
+                                    <div class="th4">{{$data}}</div>
                                     <div class="th5">
-                                        <a href="{{route('ShopCate.goodsManage',$data[0]->id)}}">商品管理</a>
+                                        <a href="{{route('ShopCate.goodsManage', 12)}}">商品管理</a>
                                         {{--  <a href="javascript:show_sub('{{route('ShopCate.createSub',$it    em['cat_id'])}}','{{$item['cat_id']}}')">添加子分类</a>--}}
                                     </div>
                                 </div>

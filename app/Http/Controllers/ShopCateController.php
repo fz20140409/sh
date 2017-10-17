@@ -25,10 +25,9 @@ class ShopCateController extends BaseController
         $good_ids = DB::table('goods')->where('sr_id', session('uid'))->where('enabled', 1)->pluck('goods_id')->toArray();
 
         if (empty($good_ids)) {
-            $data = DB::table('merchant_shopclassify as a')->select(DB::raw("0 as count"),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => -1, 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
+            $data = 0;
         } else {
-            $good_ids = implode(',', $good_ids);
-            $data = DB::table('merchant_shopclassify as a')->select(DB::raw("(select count(*) from goods_shopclassify WHERE good_id in ({$good_ids}) and sc_id=a.cat_id and enabled=1) as count"),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => -1, 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
+            $data = DB::table('goods_shopclassify')->whereIn('good_id', $good_ids)->where('sc_id', 12)->where('enabled', 1)->count();
         }
 
         $info = DB::table('merchant_shopclassify as a')->select(DB::raw('(select count(*) from goods_shopclassify WHERE sc_id=a.cat_id and enabled=1) as count'),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => session('uid'), 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
