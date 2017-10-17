@@ -191,7 +191,7 @@ class ShopCateController extends BaseController
     public function changeOne(Request $request)
     {
         $id=$request->id;
-        DB::table('merchant_shopclassify')->where('cat_id',$id)->update(['parent_id'=>0]);
+        DB::table('merchant_shopclassify')->where('cat_id',$id)->update(['parent_id'=>0,'level'=>1]);
         return response()->json(['status' => 0, 'msg' => '操作成功']);
 
     }
