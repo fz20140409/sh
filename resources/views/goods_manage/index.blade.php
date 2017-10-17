@@ -209,7 +209,6 @@
             }
 
 
-
             var index = layer.open({
                 area: ['700px', ''],
                 type: 1 //Page层类型
@@ -220,10 +219,11 @@
                 , anim: 1 //0-6的动画形式，-1不开启
                 , content: $("#create")
             });
+
             $("#create_cancel").unbind('click');
             $("#create_cancel").click(function () {
                 //清空表单
-                document.getElementById('form').reset();
+                $('#form input[class="minimal"]:checked').iCheck('uncheck');
                 layer.close(index);
             });
             $("#create_save").unbind('click');
