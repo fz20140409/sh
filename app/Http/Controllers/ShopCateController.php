@@ -244,7 +244,8 @@ class ShopCateController extends BaseController
             return response()->json(['status'=>1,'msg'=>'缺少参数']);
         }
 
-        DB::table('goods_shopclassify')->where(['good_id'=>$goods_id,'sc_id'=>$cate_id])->update(['sc_id' => 12]);
+        DB::table('goods_shopclassify')->where('good_id', $goods_id)->update(['enabled' => 0]);
+        DB::table('goods_shopclassify')->where('good_id', $goods_id)->limit(1)->update(['sc_id' => 12, 'enabled' => 1]);
         return response()->json(['status'=>200,'msg'=>'操作成功']);
 
     }
