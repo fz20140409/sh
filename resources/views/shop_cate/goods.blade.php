@@ -25,7 +25,7 @@
                                         <th>价格</th>
                                         <th>销量<span class="arrow"><a href="{{route('ShopCate.goodsManage',$id)}}?sell_count=1"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></a><a href="{{route('ShopCate.goodsManage',$id)}}?sell_count=2"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></a></span></th>
                                         <th>库存<span class="arrow"><a href="{{route('ShopCate.goodsManage',$id)}}?kc=1"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></a><a href="{{route('ShopCate.goodsManage',$id)}}?kc=2"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></a></span></th>
-                                        <th width="13%">分类</th>
+                                        {{--<th width="13%">分类</th>--}}
                                         <th>状态</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
@@ -58,13 +58,13 @@
                                         <td>{{$v->price}}</td>
                                         <td>{{$v->sell_count}}</td>
                                         <td>{{$v->kc}}</td>
-                                        <td>
-                                            @if(!empty($v->cate))
-                                                @foreach(explode(',',$v->cate) as $s)
-                                                    <p>{{$s}}</p>
-                                                @endforeach
-                                            @endif
-                                        </td>
+                                        {{--<td>--}}
+                                            {{--@if(!empty($v->cate))--}}
+                                                {{--@foreach(explode(',',$v->cate) as $s)--}}
+                                                    {{--<p>{{$s}}</p>--}}
+                                                {{--@endforeach--}}
+                                            {{--@endif--}}
+                                        {{--</td>--}}
                                         <td>@if($v->state==1) 上架 @elseif($v->state==3)下架 @else @endif</td>
                                         <td>{{$v->createtime}}</td>
                                         <td class="op">
