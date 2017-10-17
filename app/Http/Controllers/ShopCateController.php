@@ -24,6 +24,7 @@ class ShopCateController extends BaseController
     {
         $good_ids = DB::table('goods')->where('sr_id', session('uid'))->where('enabled', 1)->pluck('goods_id')->toArray();
         $good_ids = implode(',', $good_ids);
+        $good_ids = empty($good_ids) ? '0' : $good_ids;
 
         $data = DB::table('merchant_shopclassify as a')->select(DB::raw("(select count(*) from goods_shopclassify WHERE good_id in ({$good_ids}) and sc_id=a.cat_id and enabled=1) as count"),'a.cat_id as id', 'a.parent_id as pid', 'a.sc_name', 'a.createtime')->where(['a.sr_id' => -1, 'a.enabled' => 1])->orderBy('a.orderby','asc')->get()->toArray();
 
