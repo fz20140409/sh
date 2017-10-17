@@ -582,9 +582,11 @@
                        layer.close(index);
                        tttt();
                    });
+               }else{
+                   tttt();
                }
 
-            tttt();
+
 
 
 
@@ -878,7 +880,7 @@
         $("#img").click(function () {
             var img_length = $(".img_c").length;
             if (img_length >= 9) {
-                layer.alert('最高只能上传9张照片!');
+                layer.msg('最高只能上传9张照片!');
                 return false;
             } else {
                 return true;
@@ -889,6 +891,7 @@
         $('#img').fileupload({
             url: "{{route('Uploader.uploadImg')}}",
             dataType: 'json',
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             done: function (e, data) {
                 if (data.result.status == 200) {
                     var a=purl(data.result.url);
@@ -1359,28 +1362,6 @@ $(".select2").select2();
             checkboxClass: 'icheckbox_minimal-blue',
             radioClass: 'iradio_minimal-blue',
         });
-       /* $('.cat_p').each(function () {
-           $(this).on('ifChecked', function () {
-               $(this).next('.cat_s').find('input[type="checkbox"]').iCheck('check');
-            });
-            $(this).on('ifUnchecked', function () {
-
-                $(this).next('.cat_s').find('input[type="checkbox"]').iCheck('uncheck');
-            });
-        });
-        $('.cat_s').each(function () {
-            $(this).on('ifChecked', function () {
-                console.log(  $(this).prev());
-                $(this).prev().unbind('ifChecked')
-                $(this).prev().iCheck('check');
-                $(this).prev().on('ifChecked', function () {
-                    $(this).next('.cat_s').find('input[type="checkbox"]').iCheck('check');
-                });
-
-            })
-
-        })*/
-
         $('.cat_p').each(function () {
             $(this).on('ifChecked', function () {
                 if ($(this).next('.cat_s').find('input[type="checkbox"]:checked').length <= 0) {
@@ -1390,11 +1371,18 @@ $(".select2").select2();
             $(this).on('ifUnchecked', function () {
 
                 $(this).next('.cat_s').find('input[type="checkbox"]').iCheck('uncheck');
+
             });
         });
 
         $(".cat_s").find('input[type="checkbox"]').on('ifChecked', function () {
             $(this).parents('.cat_s').prev().find('input[type="checkbox"]').iCheck('check');
+        });
+        $(".cat_s").find('input[type="checkbox"]').on('ifUnchecked', function () {
+            var c=$(this).parents('.cat_s').find('input[type="checkbox"]:checked').length;
+            if(c==0){
+                $(this).parents('.cat_s').prev().find('input[type="checkbox"]').iCheck('uncheck');
+            }
         });
 
 
