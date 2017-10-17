@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('title','商品列表')
-@section('module',"($merchant_shopclassify->sc_name)分类下商品")
+@section('module',"($merchant_shopclassify->sc_name)下商品")
 @section('op','列表')
 
 @section('content')
