@@ -610,7 +610,7 @@ class GoodsManageController extends BaseController
     function batchCate(Request $request){
         $cat_ids=$request->cat_ids;
         $ids=$request->ids;
-        if(!isset($cat_ids)||empty($cat_ids)||!isset($ids)||empty($ids)){
+        if(!isset($ids)||empty($ids)){
             return response()->json(['status'=>1,'msg'=>'缺少参数']);
         }
         DB::beginTransaction();
