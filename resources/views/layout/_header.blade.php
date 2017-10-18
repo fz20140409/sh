@@ -1,20 +1,22 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="{{route('Home.index')}}" class="logo">
+    {{--<a href="{{route('Home.index')}}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">{{env('APP_NAME')}}</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">{{env('APP_NAME')}}</span>
-    </a>
+    </a>--}}
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" style="margin-left: 0px">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        {{--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
-        </a>
+        </a>--}}
 
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+
+
+        <div class="navbar-custom-menu" style="float: left">
+            <ul class="nav navbar-nav" >
                 <!-- Messages: style can be found in dropdown.less-->
                 {{--<li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -209,16 +211,17 @@
                     </ul>
                 </li>--}}
                 <!-- User Account: style can be found in dropdown.less -->
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="dropdown user user-menu" >
+                    <a href="#" >
                         {{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">--}}
                         <img src="@if(session('user')&&session('user')->uicon) {{session('user')->uicon}} @else /adminlte/dist/img/user2-160x160.jpg  @endif" class="user-image" alt="User Image">
-                        <span class="hidden-xs">@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else {{session('user')->phone}} @endif</span>
+                        {{--<span class="hidden-xs">@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else {{session('user')->phone}} @endif</span>--}}
+                        <span class="hidden-xs">@if(session('user')&&session('user')->company) {{session('user')->company}}  @endif</span>
                     </a>
-                    <ul class="dropdown-menu">
+                    {{--<ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            {{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}
+                            --}}{{--<img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}{{--
                             <img src="@if(session('user')&&session('user')->uicon) {{session('user')->uicon}} @else /adminlte/dist/img/user2-160x160.jpg @endif" class="img-circle" alt="User Image">
 
                             <p>
@@ -226,7 +229,7 @@
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        {{--<li class="user-body">
+                        --}}{{--<li class="user-body">
                             <div class="row">
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Followers</a>
@@ -239,7 +242,7 @@
                                 </div>
                             </div>
                             <!-- /.row -->
-                        </li>--}}
+                        </li>--}}{{--
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
@@ -249,13 +252,18 @@
                                 <a href="{{route('Login.logout')}}" class="btn btn-default btn-flat">退出后台</a>
                             </div>
                         </li>
-                    </ul>
+                    </ul>--}}
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 {{--<li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>--}}
             </ul>
+        </div>
+        <div class="navbar-custom-menu" style="float: right">
+            <span style="margin-top: 8px;color: #ffffff">欢迎您,@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else  {{session('user')->phone}} @endif</span>
+            <a style="margin-top: 8px;margin-left: 40px" href="#" class="btn btn-default">修改密码</a>
+            <a style="margin-top: 8px;margin-left: 20px" href="{{route('Login.logout')}}" class="btn btn-default">退出后台</a>
         </div>
     </nav>
 </header>

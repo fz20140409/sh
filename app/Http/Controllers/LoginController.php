@@ -12,7 +12,9 @@ class LoginController extends Controller
      */
     function showLogin()
     {
-
+        if (session('user')){
+            return redirect()->route('Home.index');
+        }
         return view('login.login');
 
     }
