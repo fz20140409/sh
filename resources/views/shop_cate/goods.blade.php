@@ -90,7 +90,7 @@
                     <!--box-body-->
                     <!--box-footer-->
                     <div class="box-footer ">
-                        <a href="javascript:history.back();" class="btn btn-default">返回</a>
+                        <a href="{{route("ShopCate.index")}}" class="btn btn-default">返回</a>
                         <div style="float: right">
                             {{$info->appends($where_link)->links()}}
                         </div>
