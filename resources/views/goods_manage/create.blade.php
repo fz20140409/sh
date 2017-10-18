@@ -893,6 +893,9 @@
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             done: function (e, data) {
+                if (data.result.msg == '未授权，请登录！') {
+                    location.href="{{route('Login.showLogin')}}";
+                }
                 if (data.result.status == 200) {
                     var a=purl(data.result.url);
                     var b="'"+a+"'";
