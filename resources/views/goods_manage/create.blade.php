@@ -160,7 +160,7 @@
                                                 <input readonly class="form-control" type="text" value="=">
                                             </div>
                                             <div class="col-xs-2">
-                                                <input @if(isset($id)) value="{{$goods_spec[0]->changespec_value}}" @endif name="spec[]" type="number" class="form-control changespec_value">
+                                                <input @if(isset($id)) value="{{$goods_spec[0]->changespec_value}}" @endif name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="form-control changespec_value">
                                             </div>
                                             <div class="col-xs-2">
                                                 <select  name="spec[]" class="form-control changespec_id">
@@ -193,14 +193,14 @@
                                         <div class="col-sm-8 row">
                                             <div class="col-xs-3">
                                                 <div class="input-group">
-                                                    <input @if(isset($id)) value="{{$goods_spec[0]->price}}" @endif name="spec[]" required type="number"
+                                                    <input @if(isset($id)) value="{{$goods_spec[0]->price}}" @endif name="spec[]" required onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8"
                                                            class="price form-control">
                                                     <span class="input-group-addon">元/<span class="for-unit_one"></span></span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-offset-1 col-xs-3">
                                                 <div class="input-group">
-                                                    <input @if(isset($id)) value="{{$goods_spec[0]->changespec_price}}" @endif name="spec[]" type="number" class="changespec_price form-control">
+                                                    <input @if(isset($id)) value="{{$goods_spec[0]->changespec_price}}" @endif name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="changespec_price form-control">
                                                     <span class="input-group-addon">元/<span class="for-unit_two"></span></span>
                                                 </div>
                                             </div>
@@ -212,7 +212,7 @@
                                         <div class="col-sm-8 row">
                                             <div class="col-xs-3">
                                                 <div class="input-group">
-                                                    <input @if(isset($id)) value="{{$goods_spec[0]->kc}}" @endif name="spec[]" required type="number"
+                                                    <input @if(isset($id)) value="{{$goods_spec[0]->kc}}" @endif name="spec[]" required onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8"
                                                            class="kc form-control">
                                                     <span class="input-group-addon"><span class="for-unit_one"></span></span>
                                                 </div>
@@ -222,7 +222,7 @@
                                             </div>
                                             <div class="col-xs-3">
                                                 <div class="input-group">
-                                                    <input @if(isset($id)) value="{{$goods_spec[0]->changespec_kc}}" @endif  name="spec[]" type="number" class="changespec_kc form-control">
+                                                    <input @if(isset($id)) value="{{$goods_spec[0]->changespec_kc}}" @endif  name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="changespec_kc form-control">
                                                     <span class="input-group-addon"><span class="for-unit_two"></span></span>
                                                 </div>
                                             </div>
@@ -404,7 +404,7 @@
                                         <input readonly class="form-control" type="text" value="=">
                                     </div>
                                     <div class="col-xs-2">
-                                        <input    @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_value}}" @endif name="spec[]" type="number" class="form-control changespec_value">
+                                        <input    @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_value}}" @endif name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="form-control changespec_value">
                                     </div>
                                     <div class="col-xs-2">
                                         <select  name="spec[]" class="form-control changespec_id">
@@ -425,14 +425,14 @@
                                 <div class="col-sm-8 row">
                                     <div class="col-xs-3">
                                         <div class="input-group">
-                                            <input   readonly  required type="number"
+                                            <input   readonly  required onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8"
                                                    class="price form-control">
                                             <span class="input-group-addon">元/<span class="for-unit_one"></span></span>
                                         </div>
                                     </div>
                                     <div class="col-xs-offset-1 col-xs-3">
                                         <div class="input-group">
-                                            <input  @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_price}}" @endif name="spec[]" type="number" class="changespec_price form-control">
+                                            <input  @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_price}}" @endif name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="changespec_price form-control">
                                             <span class="input-group-addon">元/<span class="for-unit_two"></span></span>
                                         </div>
                                     </div>
@@ -443,7 +443,7 @@
                                 <div class="col-sm-8 row">
                                     <div class="col-xs-3">
                                         <div class="input-group">
-                                            <input readonly  required type="number"
+                                            <input readonly  required onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8"
                                                    class="kc form-control">
                                             <span class="input-group-addon"><span class="for-unit_one"></span></span>
                                         </div>
@@ -453,7 +453,7 @@
                                     </div>
                                     <div class="col-xs-3">
                                         <div class="input-group">
-                                            <input @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_kc}}" @endif  name="spec[]" type="number" class="changespec_kc form-control">
+                                            <input @if(isset($id)&&count($goods_spec)>1) value="{{$goods_spec[1]->changespec_kc}}" @endif  name="spec[]" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"  maxlength="8" class="changespec_kc form-control">
                                             <span class="input-group-addon"><span class="for-unit_two"></span></span>
                                         </div>
                                     </div>
