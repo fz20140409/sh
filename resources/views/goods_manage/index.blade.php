@@ -76,20 +76,27 @@
                                                 </div>
                                                 <div class="media-body">
                                                         @if($v->is_cuxiao)
-                                                        【促销商品】
+                                                        <span style="color: red">【促销商品】</span>
                                                         @endif @if($v->is_new)
-                                                                【新品推荐】
+                                                                <span style="color: red"> 【新品推荐】</span>
                                                         @endif @if($v->is_hot)
-                                                            【热销推荐】
+                                                                <span style="color: red"> 【热销推荐】</span>
                                                         @endif
                                                    <p>{{$v->goods_name}}</p>
                                                     {{$v->goods_smallname}}
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{$v->price}}</td>
+                                        <td>
+                                            <p style="color: red">{{$v->a_price}}</p>
+                                            <p style="color: red">{{$v->a_changeprice}}</p>
+
+                                        </td>
                                         <td>{{$v->sell_count}}</td>
-                                        <td>{{$v->kc}}</td>
+                                        <td>
+                                            <p style="color:#1f648b">{{$v->a_kc}}</p>
+                                            <p style="color: #1f648b">{{$v->a_changekc}}</p>
+                                        </td>
                                         <td>
                                             @if(!empty($v->cate))
                                                 @foreach(explode(',',$v->cate) as $s)

@@ -60,8 +60,18 @@ class GoodsManageController extends BaseController
             $goods=$goods->where('a.goods_name', 'like', "%$goods_name%")->orWhere('a.goods_smallname', 'like', "%$goods_name%");
             $where_link['goods_name']=$goods_name;
         }
+        $sql=<<<SQL
+a.*,
+(SELECT GROUP_CONCAT(g.sc_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as sc_id, 
+(SELECT GROUP_CONCAT(f.parent_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as parent_id, 
+(SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as cate,
+(select concat(price,'/',spec_name) from goods_spec where good_id=a.goods_id limit 1) as a_price, 
+(select concat(changespec_price,'/',changespec_name) from goods_spec where good_id=a.goods_id limit 1) as a_changeprice ,
+(select concat(kc,spec_name) from goods_spec where good_id=a.goods_id limit 1) as a_kc ,
+(select concat(changespec_kc,changespec_name) from goods_spec where good_id=a.goods_id limit 1) as a_changekc 
+SQL;
 
-        $sql='a.*,(SELECT GROUP_CONCAT(g.sc_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as sc_id, (SELECT GROUP_CONCAT(f.parent_id) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as parent_id, (SELECT GROUP_CONCAT(f.sc_name) FROM goods_shopclassify as g LEFT JOIN merchant_shopclassify AS f ON g.sc_id=f.cat_id WHERE g.good_id=a.goods_id and f.enabled=1 and g.enabled=1) as cate';
+
         $info=$goods->select(DB::raw($sql))->where($where)->orderBy('a.createtime','desc')->paginate(10);
 
         foreach ($info as $value) {
