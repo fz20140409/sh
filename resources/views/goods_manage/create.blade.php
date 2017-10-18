@@ -880,7 +880,7 @@
         $("#img").click(function () {
             var img_length = $(".img_c").length;
             if (img_length >= 9) {
-                layer.msg('最高只能上传9张照片!');
+                layer.msg('最多只能上传9张照片!');
                 return false;
             } else {
                 return true;
@@ -896,8 +896,14 @@
                 if (data.result.status == 200) {
                     var a=purl(data.result.url);
                     var b="'"+a+"'";
-                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2 img_c"><img height="120px" width="100%" src="'+data.result.url+'" ><a  onclick=img_del('+b+')><p class="img_p" style="text-align: center">删除</p></a></div>')
-                    $('#upload_form').append('<input name="file[]" id="file_'+a+'" type="hidden" value="'+data.result.url+'">')
+                    $('#btn_add').before('<div id="img_'+a+'" class="col-xs-6 col-md-2 img_c"><img height="120px" width="100%" src="'+data.result.url+'" ><a  onclick=img_del('+b+')><p class="img_p" style="text-align: center">删除</p></a></div>');
+                    $('#upload_form').append('<input name="file[]" id="file_'+a+'" type="hidden"  value="'+data.result.url+'">');
+
+                    if ($(".img_p").length > 9) {
+                        $(".img_c:gt(8)").remove();
+                        $("input[name='file[]']:gt(8)").remove();
+                        layer.msg('最多只能上传9张照片!');
+                    }
                 }else {
                     layer.msg(data.result.error);
                 }
