@@ -738,14 +738,25 @@
         function show_menu() {
 
             layer.open({
-                type: 1,
+               /* type: 1,
                 area: ['420px', ''], //宽高
                 shade: false,
                 title: false, //不显示标题
+                offset: ['250px', '950px'],
                 content: $('#menu'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
                 cancel: function(){
-                  /*  layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});*/
-                }
+                  /!*  layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});*!/
+                }*/
+
+                type: 1,
+                offset: ['250px', '950px'],
+                shade: false,
+                area: ['420px', ''], //宽高
+                skin: 'layui-layer-demo', //样式类名
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: $('#menu')
+
             });
         }
 
