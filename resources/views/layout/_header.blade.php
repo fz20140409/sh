@@ -262,7 +262,7 @@
         </div>
         <div class="navbar-custom-menu" style="float: right">
             <span style="margin-top: 8px;color: #ffffff">欢迎您,@if(session('user')&&session('user')->IDname) {{session('user')->IDname}} @else  {{session('user')->phone}} @endif</span>
-            <a style="margin-top: 8px;margin-left: 40px" href="#" class="btn btn-default">修改密码</a>
+          {{--  <a style="margin-top: 8px;margin-left: 40px" href="#" class="btn btn-default">修改密码</a>--}}
             <a style="margin-top: 8px;margin-left: 20px" href="{{route('Login.logout')}}" class="btn btn-default">退出后台</a>
         </div>
     </nav>
