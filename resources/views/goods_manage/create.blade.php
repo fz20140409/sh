@@ -733,7 +733,7 @@
 
 
 
-        
+
         //展示菜单
         function show_menu() {
 
@@ -903,6 +903,23 @@
             url: "{{route('Uploader.uploadImg')}}",
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 2000000,
+            add: function(e, data) {
+                var uploadErrors = [];
+                var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                    uploadErrors.push('不支持类型');
+
+                }
+                if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2000000) {
+                    uploadErrors.push('文件太大');
+                }
+                if(uploadErrors.length > 0) {
+                    layer.msg(uploadErrors.join("\n"));
+                } else {
+                    data.submit();
+                }
+            },
             done: function (e, data) {
                 if (data.result.msg == '未授权，请登录！') {
                     location.href="{{route('Login.showLogin')}}";
