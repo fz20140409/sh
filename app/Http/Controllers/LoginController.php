@@ -32,9 +32,14 @@ class LoginController extends Controller
         $data=[
             'param'=>['phone'=>$phone,'code'=>$code]
         ];
+
+
         $data=json_decode(curl_request($url,true,$data));
 
 
+        if(empty($data)){
+            return redirect()->back()->with('error','未知错误');
+        }
         if($data->code==0){
             if($data->data->flag==1){
                 return redirect()->back()->with('error','未注册用户,请前往买家版注册');
