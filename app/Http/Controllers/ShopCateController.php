@@ -75,10 +75,28 @@ class ShopCateController extends BaseController
             return response()->json(['status' => 1, 'msg' => '分类名称不能为空']);
         }
         //同名检测
-        $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->count();
+        $count = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => $catename, 'sr_id' => session('uid'), 'enabled' => 1])->first();
         if (!empty($count)) {
             return response()->json(['status' => 1, 'msg' => '不允许同名','enabled'=>1]);
         }
+
+        if ($pid != 0) {
+            $other = DB::table('merchant_shopclassify')->where(['parent_id' => $pid, 'sc_name' => '其他', 'sr_id' => session('uid'), 'level' => 2, 'enabled' => 1])->first();
+            if (empty($other)) {
+                // 新增其他子分类
+                $merchant_shop_id = DB::table('merchant_shopclassify')->insertGetId([
+                    'sr_id' => session('uid'),
+                    'level' => ($pid == 0) ? 1 : 2,
+                    'sc_name' => '其他',
+                    'parent_id' => $pid,
+                    'createtime' => date('Y-m-d H:i:s'),
+                    'enabled' => 1
+                ]);
+                // 该父类下的商品移到相应的子类‘其他’分类下
+                DB::table('goods_shopclassify')->where('sc_id', $pid)->update(['sc_id' => $merchant_shop_id]);
+            }
+        }
+
         $insert = [
             'sc_name' => $catename,
             'parent_id' => $pid,
@@ -95,8 +113,6 @@ class ShopCateController extends BaseController
         DB::table('merchant_shopclassify')->insert($insert);
 
         return response()->json(['status' => 0, 'msg' => '添加成功']);
-
-
     }
 
     /**
