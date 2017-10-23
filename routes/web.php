@@ -54,6 +54,8 @@ Route::post('/Uploader/uploadImg', "Tools\UploaderController@uploadImg")->name('
 Route::post('/Uploader/uploadVideo', "Tools\UploaderController@uploadVideo")->name('Uploader.uploadVideo');
 Route::post('/Uploader/deleteUploadImg', "Tools\UploaderController@deleteUploadImg")->name('Uploader.deleteUploadImg');
 
+//有话说
+Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
 
 
 
