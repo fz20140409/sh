@@ -33,6 +33,7 @@
             <li id="add_goods"><a href="{{route("GoodsManage.create")}}"><i class="fa fa-plus"></i> <span>增加商品</span></a></li>
             <li id="goods_mg"><a href="{{route("GoodsManage.index")}}"><i class="fa fa-shopping-bag"></i> <span>商品管理</span></a></li>
             <li id="shop_cate"><a href="{{route("ShopCate.index")}}"><i class="fa fa-book"></i> <span>商铺分类</span></a></li>
+            <li id="shop_cate"><a href="{{route("Talk.talkMe")}}"><i class="fa fa-book"></i> <span>对我说</span></a></li>
             {{--<li class="active treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
