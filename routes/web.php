@@ -57,6 +57,10 @@ Route::post('/Uploader/deleteUploadImg', "Tools\UploaderController@deleteUploadI
 //有话说
 Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
 
+//有话说接口
+
+Route::get('/talk/getLginInfo', "TalkController@getLginInfo")->name('Talk.getLginInfo');//获取平台有话说角色接口
+
 
 
 
