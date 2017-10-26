@@ -54,6 +54,14 @@ Route::post('/Uploader/uploadImg', "Tools\UploaderController@uploadImg")->name('
 Route::post('/Uploader/uploadVideo', "Tools\UploaderController@uploadVideo")->name('Uploader.uploadVideo');
 Route::post('/Uploader/deleteUploadImg', "Tools\UploaderController@deleteUploadImg")->name('Uploader.deleteUploadImg');
 
+//用户管理
+Route::resource('um','UserManageController');
+Route::get('/um/getPersonInfo/{id}','UserManageController@getPersonInfo')->name('um.getPersonInfo');
+Route::get('/um/getBossInfo/{id}','UserManageController@getBossInfo')->name('um.getBossInfo');
+Route::get('/um/getBusinessInfo/{id}','UserManageController@getBusinessInfo')->name('um.getBusinessInfo');
+Route::get('/um/getTransactorInfo/{id}','UserManageController@getTransactorInfo')->name('um.getTransactorInfo');
+Route::get('/um/getCompanyInfo/{id}','UserManageController@getCompanyInfo')->name('um.getCompanyInfo');
+
 //有话说
 Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
 
