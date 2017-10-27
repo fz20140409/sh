@@ -21,35 +21,31 @@
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>与老板关系</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>性格</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>特质</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>思维</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>发展目标</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
+        <td>交际能力</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>姓名</td>
-        <td>xxx</td>
-    </tr>
-    <tr>
-        <td>姓名</td>
+        <td>学习力</td>
         <td>xxx</td>
     </tr>
 

@@ -21,7 +21,7 @@
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老家</td>
+        <td>老家哪里</td>
         <td>xxx</td>
     </tr>
     <tr>
@@ -45,32 +45,31 @@
         <td>xxx</td>
     </tr>
     <tr>
-        <td>生意朋友圈</td>
+        <td>家族生意圈/生意朋友圈</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>发展</td>
+        <td>发展履历</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老板姓名</td>
+        <td>家族背景（突出创一代OR 二代）</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老板姓名</td>
+        <td>家庭结构</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老板姓名</td>
+        <td>最适合联络时间</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老板姓名</td>
+        <td>投资相关产业</td>
         <td>xxx</td>
     </tr>
     <tr>
-        <td>老板姓名</td>
+        <td>宗教信仰</td>
         <td>xxx</td>
     </tr>
-
-</table>0
+</table>
