@@ -13,9 +13,6 @@ class TalkController extends BaseController
     	  return view('talk.talkMe');
     }
 
-
-
-    //获取平台有话说角色接口
     function getLginInfo(){
         $info=session('user');
         if($info){
