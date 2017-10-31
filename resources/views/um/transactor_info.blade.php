@@ -1,0 +1,52 @@
+<table class=" table table-hover table-bordered">
+
+    <tr>
+        <td>姓名</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>电话</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>座机</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>微信</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>习惯和喜欢的方式</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>与老板关系</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>性格</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>特质</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>思维</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>发展目标</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>交际能力</td>
+        <td>xxx</td>
+    </tr>
+    <tr>
+        <td>学习力</td>
+        <td>xxx</td>
+    </tr>
+
+</table>
