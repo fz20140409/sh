@@ -908,7 +908,7 @@
                 var uploadErrors = [];
                 var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
                 if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                    uploadErrors.push('不支持类型');
+                    uploadErrors.push('非图片格式,无法上传');
 
                 }
                 if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2000000) {
