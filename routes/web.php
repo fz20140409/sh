@@ -59,7 +59,7 @@ Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
 
 //有话说接口
 
-Route::get('/talk/getLginInfo', "TalkController@getLginInfo")->name('Talk.getLginInfo');//获取平台有话说角色接口
+Route::get('/talk/getLginInfo', "TalkController@getLginInfo")->name('Talk.getLginInfo');//获取登录信息
 
 
 
