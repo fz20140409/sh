@@ -62,6 +62,9 @@ Route::get('/um/getBusinessInfo/{id}','UserManageController@getBusinessInfo')->n
 Route::get('/um/getTransactorInfo/{id}','UserManageController@getTransactorInfo')->name('um.getTransactorInfo');
 Route::get('/um/getCompanyInfo/{id}','UserManageController@getCompanyInfo')->name('um.getCompanyInfo');
 
+// 网店设置
+Route::get('/os/index', 'OnlineShopController@index')->name('os.index');
+
 //有话说
 Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
 
