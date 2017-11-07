@@ -44,7 +44,7 @@
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
             </div>
             <div class="form-group form-inline">
-                <input  name="code" type="text" class="form-control" placeholder="短信验证码">
+                <input  name="code" type="text" class="form-control" placeholder="短信验证码" style="width: 60%">
                 <span>
                   <button id="for-code" onclick="getCode()" class=" btn btn-default pull-right" type="button">获取验证码</button>
                 </span>
@@ -95,11 +95,12 @@
             success:function (response) {
                 if(response.status==0){
                     //发送成功
-                    $('#for-code').text('120');
-                    var loginTime=$('#for-code').text();
+                    $('#for-code').text('');
+                    $('#for-code').append('重新发送<span id="code" style="color: red">120</span>秒');
+                    var loginTime=$('#code').text();
                     var time = setInterval(function(){
                         loginTime = loginTime-1;
-                        $('#for-code').text(loginTime);
+                        $('#code').text(loginTime);
                         if(loginTime==0){
                             clearInterval(time);
                             $('#for-code').text('获取验证码');
