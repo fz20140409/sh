@@ -2,6 +2,9 @@
     <tr>
         <td width="20%">头像</td>
         <td><img style="float: left" width="10%"  class="img-responsive center-block" src="{{$info->uicon}}"></td>
+        <td>
+            <button class="btn btn-default">修改</button>
+        </td>
     </tr>
     <tr>
         <td>用户类型</td>

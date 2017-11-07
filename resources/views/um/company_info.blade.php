@@ -1,6 +1,6 @@
 <table class=" table table-hover table-bordered">
     <tr>
-        <td>企业名称</td>
+        <td width="20%">企业名称</td>
         <td>{{$user->company}}</td>
     </tr>
     <tr>
