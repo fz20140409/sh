@@ -141,11 +141,7 @@
                                         <label class="col-sm-2 control-label"><span
                                                     style="color: red">*</span>商品规格</label>
                                         <div class="col-sm-8 row">
-<<<<<<< HEAD
                                             <div class="col-xs-1">
-=======
-                                            <div class="col-xs-2">
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
                                                 <input readonly class="form-control" type="text" value="1">
                                             </div>
                                             <div class="col-xs-2">
@@ -160,11 +156,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-<<<<<<< HEAD
                                             <div class="col-xs-1">
-=======
-                                            <div class="col-xs-2">
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
                                                 <input readonly class="form-control" type="text" value="=">
                                             </div>
                                             <div class="col-xs-2">
@@ -401,22 +393,14 @@
                                 <label class="col-sm-2 control-label"><span
                                             style="color: red">*</span>商品规格</label>
                                 <div class="col-sm-8 row">
-<<<<<<< HEAD
                                     <div class="col-xs-1">
-=======
-                                    <div class="col-xs-2">
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
                                         <input readonly class="form-control" type="text" value="1">
                                     </div>
                                     <div class="col-xs-2">
 
                                         <input readonly class="form-control spec_id" type="text" value="">
                                     </div>
-<<<<<<< HEAD
                                     <div class="col-xs-1">
-=======
-                                    <div class="col-xs-2">
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
                                         <input readonly class="form-control" type="text" value="=">
                                     </div>
                                     <div class="col-xs-2">

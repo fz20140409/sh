@@ -32,11 +32,8 @@ class LoginController extends Controller
         $data=[
             'param'=>['phone'=>$phone,'code'=>$code]
         ];
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
         $data=json_decode(curl_request($url,true,$data));
 
 
@@ -44,13 +41,9 @@ class LoginController extends Controller
             return redirect()->back()->with('error','未知错误');
         }
         if($data->code==0){
-<<<<<<< HEAD
             if($data->data->flag==1){
                 return redirect()->back()->with('error','未注册用户,请前往买家版注册');
             }else{
-=======
-            if($data->data->flag!=1){
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
                 //成功
                 $info=$data->data->userInfo[0];
                 //存入session
@@ -59,17 +52,11 @@ class LoginController extends Controller
                 //重定向主页
                 return redirect()->route('Home.index');
             }
-<<<<<<< HEAD
         }else{
             return redirect()->back()->with('error',$data->msg);
 
 
         }
-=======
-            return redirect()->back()->with('error','未注册用户,请前往买家版注册');
-        }
-        return redirect()->back()->with('error',$data->msg);
->>>>>>> 9ddea4cfe0d65fa8e7ddbc1a8e5f48d39ebfbdd4
 
     }
 
