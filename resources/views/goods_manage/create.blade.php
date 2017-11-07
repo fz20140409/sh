@@ -141,7 +141,7 @@
                                         <label class="col-sm-2 control-label"><span
                                                     style="color: red">*</span>商品规格</label>
                                         <div class="col-sm-8 row">
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-2">
                                                 <input readonly class="form-control" type="text" value="1">
                                             </div>
                                             <div class="col-xs-2">
@@ -156,7 +156,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-2">
                                                 <input readonly class="form-control" type="text" value="=">
                                             </div>
                                             <div class="col-xs-2">
@@ -393,14 +393,14 @@
                                 <label class="col-sm-2 control-label"><span
                                             style="color: red">*</span>商品规格</label>
                                 <div class="col-sm-8 row">
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2">
                                         <input readonly class="form-control" type="text" value="1">
                                     </div>
                                     <div class="col-xs-2">
 
                                         <input readonly class="form-control spec_id" type="text" value="">
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2">
                                         <input readonly class="form-control" type="text" value="=">
                                     </div>
                                     <div class="col-xs-2">
