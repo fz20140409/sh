@@ -64,6 +64,7 @@ Route::get('/um/getCompanyInfo/{id}','UserManageController@getCompanyInfo')->nam
 
 // 网店设置
 Route::get('/os/index', 'OnlineShopController@index')->name('os.index');
+Route::post('/os', 'OnlineShopController@store')->name('os.store');
 
 //有话说
 Route::get('/talk/talkMe', "TalkController@talkMe")->name('Talk.talkMe');
