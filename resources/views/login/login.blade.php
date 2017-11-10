@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <title>{{env('APP_NAME')}}-登录</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -62,8 +61,7 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
-{{--<script src="/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>--}}
-<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/adminlte/bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
