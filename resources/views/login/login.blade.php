@@ -62,7 +62,8 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
-<script src="/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+{{--<script src="/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>--}}
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/adminlte/bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
