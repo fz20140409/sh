@@ -3,5 +3,5 @@
  * 自定义配置
  */
 return [
-    'api_url'=>"http://101.37.68.23:8588",
+    'api_url'=>"kspt.fjmaimaimai.com:8588",
 ];
