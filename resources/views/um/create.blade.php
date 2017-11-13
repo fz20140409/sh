@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('module',"$info->type_name")
+@section('module', '个人资料')
 @section('op','详情')
 
 @section('css')
