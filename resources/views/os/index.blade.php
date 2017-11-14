@@ -31,19 +31,19 @@
                                     <div class="col-sm-3" style="padding: 0px;">
                                         <div id="module" style="height: 750px;border: 1px solid #d2d6de;overflow-y: auto;">
 
-                                            <div id="top" class="row text-center" style="background-image:url('{{$merchant->background}}'); background-repeat: no-repeat; background-size: 100%; 100%;">
+                                            <div id="top" class="row text-center" style="background-image:url('{{!empty($merchant->background) ? $merchant->background : "/img/topBg.jpg"}}'); background-repeat: no-repeat; background-size: 100%; 100%;">
                                                 <div class="col-xs-12" style="height: 50px;"></div>
 
                                                 <div class="col-xs-3">
                                                     <img style="width: 48px;" src="{{$user->uicon}}">
-                                                    <button type="button" class="btn btn-default btn-xs">已在乎</button>
+                                                    <button type="button" class="btn btn-default btn-xs">{{ empty($favor) ? '未在乎' : '已在乎' }}</button>
                                                 </div>
                                                 <div class="col-xs-9 text-left" style="padding-left: 0px;">
                                                     <div class="col-xs-8" style="padding: 0px;">{{$user->company}}</div>
                                                     <div class="col-xs-4"><button type="button" style="float: right;" class="btn btn-default btn-xs">我要评价</button></div>
                                                     <div class="col-xs-12" style="padding: 0px;">{{$merchant_type_name}}</div>
                                                     <div class="col-xs-4" style="padding: 0px;">诚信值</div>
-                                                    <div class="col-xs-8"><img style="height: 24px; float: right;" src="/img/star_level.png"></div>
+                                                    <div class="col-xs-8"><img style="height: 24px; float: right;" src="/img/evaluate.png"></div>
                                                 </div>
                                             </div>
                                             {{--顶部遮罩--}}
@@ -55,7 +55,7 @@
                                                     <img class="img-responsive" style="width: 30px;" src="/img/broadcast.png">
                                                 </div>
                                                 <div class="col-xs-9" style="padding-left: 0px; line-height: 29px;">
-                                                    {{$merchant_notice}}
+                                                    {{$merchant_notice ? : '暂无公告'}}
                                                 </div>
                                             </div>
                                             {{--公告遮罩--}}
@@ -71,7 +71,11 @@
                                             <div id="showcase" class="row sort" @if(empty($merchant->recoshowcase)) hidden @endif>
                                                 <div class="col-xs-12">
                                                     @if ($merchant->recoshowcase_type == 2)
-                                                        <img class="img-responsive" src="{{$merchant->recoshowcaseInfo}}">
+                                                        @if ($merchant->recoshowcaseInfo)
+                                                        <img class="img-responsive" style="min-height: 150px;" src="{{$merchant->recoshowcaseInfo}}">
+                                                        @else
+                                                        暂未上传图片
+                                                        @endif
                                                     @else
                                                         <textarea class="form-control" style="background-color: #fff; height: 150px;" readonly >{{$merchant->recoshowcaseInfo}}</textarea>
                                                     @endif
@@ -241,7 +245,7 @@
                                             </div>
 
                                             <div id="recoshowcase_type_2" @if($merchant->recoshowcase_type == 1) hidden @endif class="col-sm-12" style="border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; padding: 0px 16px 30px; font-size: 18px; line-height: 1.3333333; margin-left:80px;">
-                                                <img class="img-responsive" src="{{$merchant->recoshowcaseInfo}}" style="margin-bottom: 20px;">
+                                                <img class="img-responsive" src="@if($merchant->recoshowcase_type == 2){{$merchant->recoshowcaseInfo}}@endif" style="margin-bottom: 20px;">
                                                 <div class="col-sm-6">
                                                     <input id="file" type="file" name="file" style="display: none;">
                                                     <button onclick="javascript:document.getElementById('file').click();" type="button" class="btn btn-default btn-block">上传图片</button>
@@ -252,7 +256,7 @@
                                             </div>
 
                                             <div id="recoshowcase_type_1" @if($merchant->recoshowcase_type == 2) hidden @endif class="col-sm-12" style="border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; padding: 30px 16px; font-size: 18px; line-height: 1.3333333; margin-left:80px;">
-                                                <textarea class="form-control" rows="5" cols="5">{{$merchant->recoshowcaseInfo}}</textarea>
+                                                <textarea class="form-control" rows="5" cols="5">@if($merchant->recoshowcase_type == 1){{$merchant->recoshowcaseInfo}}@endif</textarea>
                                             </div>
                                         </div>
 
@@ -718,8 +722,12 @@
                     data: data,
                     dataType: 'json',
                     success: function (data) {
-                        layer.alert('店铺应用成功!');
-                        location.reload();
+                        if (data.code == 0) {
+                            layer.alert(data.message);
+                            location.reload();
+                        } else {
+                            layer.alert(data.message);
+                        }
                     }
                 });
 

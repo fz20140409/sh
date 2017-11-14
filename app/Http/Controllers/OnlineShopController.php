@@ -15,6 +15,7 @@ class OnlineShopController extends BaseController
         $merchant = DB::table('merchant')->where('sr_id', $user->sr_id)->first();
         $merchant_notice = DB::table('merchant_notice')->where('sr_id', $user->sr_id)->where('enabled', 1)->value('text');
         $merchant_type_name = DB::table('user_type_info')->where('id', $merchant->mtype)->value('type_name');
+        $favor = DB::table('user_merchant_favor')->where('uid', $user->uid)->where('sr_id', $user->sr_id)->where('enabled', 1)->first();
 
         // 客服电话
         $kefu_phone = DB::table('cfg_kefu')->select('id', 'tel')->where('sr_id', $user->sr_id)->where('enabled', 1)->get();
@@ -54,7 +55,8 @@ class OnlineShopController extends BaseController
             'hot_goods',
             'merchant_type_name',
             'kefu_phone',
-            'background'
+            'background',
+            'favor'
         ));
     }
 
@@ -63,6 +65,20 @@ class OnlineShopController extends BaseController
     {
         $user = session('user');
         $input = $request->all();
+        $merchant_notice = $input['merchant_notice'] ? : '';
+
+        $isMob="/^1[3-8]{1}[0-9]{9}$/";
+        $isTel="/^([0-9]{3,4}-)?[0-9]{7,8}$/";
+
+        if ($input['kefu'] != 'none') {
+            if (!empty($input['kefu'])) {
+                foreach ($input['kefu'] as $value) {
+                    if(!preg_match($isMob, $value) && !preg_match($isTel, $value)) {
+                        return response()->json(['code'=> -1, 'message'=>'请输入有效电话号码！'], 200);
+                    }
+                }
+            }
+        }
 
         $merchant = array();
         $merchant['background'] = $input['background'];
@@ -76,7 +92,7 @@ class OnlineShopController extends BaseController
         $merchant['disphone'] = $input['disphone'];
         DB::table("merchant")->where('sr_id', $user->sr_id)->update($merchant);
 
-        DB::table('merchant_notice')->where('sr_id', $user->sr_id)->where('enabled', 1)->update(['text' => $input['merchant_notice']]);
+        DB::table('merchant_notice')->where('sr_id', $user->sr_id)->where('enabled', 1)->update(['text' => $merchant_notice]);
 
         if ($input['kefu'] != 'none') {
             DB::table('cfg_kefu')->where('sr_id', $user->sr_id)->update(['enabled' => 0]);
@@ -91,6 +107,6 @@ class OnlineShopController extends BaseController
             }
         }
 
-        return response()->json(['message' => '应用成功！'], 200);
+        return response()->json(['code' => 0, 'message' => '应用成功！'], 200);
     }
 }
