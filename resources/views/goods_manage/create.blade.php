@@ -626,8 +626,6 @@
         }
 
 
-
-
         //商品详情
         function add_wz() {
             $('#module').append(' <div class="for-menu">' +
@@ -642,6 +640,8 @@
             arr.push({'type':1,'value':'',"count":count});
             console.log(arr);
             count=count+1;
+
+            layer.msg('添加成功！');
         }
         function add_hr() {
             $('#module').append(' <div class="for-menu"><hr class="menu_btn" order="'+count+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
@@ -649,6 +649,8 @@
             arr.push({'type':4,'value':'',"count":count});
             console.log(arr);
             count=count+1;
+
+            layer.msg('添加成功！');
         }
 
 
@@ -861,7 +863,7 @@
                     console.log(arr);
                     count=count+1;
 
-
+                    layer.msg('添加成功！');
                 }else {
                     layer.msg(data.result.error);
                 }
@@ -880,7 +882,7 @@
                     console.log(arr);
                     count=count+1;
 
-
+                    layer.msg('添加成功！');
                 }else {
                     layer.msg(data.result.error);
                 }
