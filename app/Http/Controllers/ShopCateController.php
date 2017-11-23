@@ -110,9 +110,9 @@ class ShopCateController extends BaseController
         } else {
             $insert['level'] = 2;
         }
-        DB::table('merchant_shopclassify')->insert($insert);
+        $insertId = DB::table('merchant_shopclassify')->insertGetId($insert);
 
-        return response()->json(['status' => 0, 'msg' => '添加成功']);
+        return response()->json(['status' => 0, 'msg' => '添加成功', 'insert_id' => $insertId]);
     }
 
     /**

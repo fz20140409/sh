@@ -191,6 +191,10 @@
                             暂无分类
                         @endif
 
+                        <div class="form-group" style="padding-top: 20px;">
+                            <input id="fl" class="form-control" style="display: inline-block; width: 200px;" type="text" placeholder="输入新分类名称" />
+                            <a class="btn btn-primary" style="margin-top: -3px;" href="javascript:add_fl();">新增</a>
+                        </div>
 
                     </div>
                 </div>
@@ -252,6 +256,58 @@
                     }
 
                 });
+            });
+        }
+
+        function add_fl() {
+            var cat_name = $.trim($("#fl").val());
+            if (cat_name == '') {
+                layer.msg('分类名称不可为空！');
+                return false;
+            }
+
+            var exist_cat_name = new Array();
+            $(".cat_p").each(function () {
+                exist_cat_name.push($.trim($(this).text()));
+            });
+
+            for(var i=0;i<exist_cat_name.length;i++){
+                if (exist_cat_name[i] == cat_name){
+                    layer.msg('分类名称不可重复！');
+                    return false
+                }
+            }
+
+            var insert_id;
+            $.ajax({
+                url: "{{route('ShopCate.store')}}",
+                data: {catename: cat_name},
+                async: false,
+                type: 'POST',
+                success: function (response) {
+                    if (response.status == 0) {
+                        insert_id = response.insert_id;
+                    } else {
+                        insert_id = false;
+                        layer.msg(response.msg);
+                    }
+                }
+
+            });
+
+            if (insert_id === false) {
+                return false;
+            }
+
+            var html = '<hr />';
+                html += '<div class="cat_p" style="padding: 10px 0px;margin-bottom: 10px">';
+                html += '<input class="minimal" name="cat_ids[]" type="checkbox" value="'+ insert_id +'">' + cat_name;
+                html += '</div>';
+
+            $(".cat_p").parent().append(html);
+            $('input[type="checkbox"].minimal').iCheck({
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'iradio_minimal-blue'
             });
         }
 
