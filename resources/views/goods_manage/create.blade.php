@@ -1291,8 +1291,9 @@
             $('.box-header ul li:not(:eq(0))').removeClass('active');
             $('.section:eq(0)').show();
             $('.section:not(:eq(0))').hide();
-        })
+        });
         function show(id) {
+            layer.closeAll();
             switch (id) {
                 case 1:
                     //基本信息
