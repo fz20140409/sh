@@ -192,7 +192,7 @@
                         @endif
 
                         <div class="form-group" style="padding-top: 20px;">
-                            <input id="fl" class="form-control" style="display: inline-block; width: 200px;" type="text" placeholder="输入新分类名称" />
+                            <input id="fl" class="form-control" style="display: inline-block; width: 200px;" type="text" placeholder="输入新分类名称" autofocus />
                             <a class="btn btn-primary" style="margin-top: -3px;" href="javascript:add_fl();">新增</a>
                         </div>
 

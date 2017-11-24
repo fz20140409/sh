@@ -642,6 +642,7 @@
             count=count+1;
 
             layer.msg('添加成功！');
+            $('#module').scrollTop(1000000);
         }
         function add_hr() {
             $('#module').append(' <div class="for-menu"><hr class="menu_btn" order="'+count+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
@@ -651,6 +652,7 @@
             count=count+1;
 
             layer.msg('添加成功！');
+            $('#module').scrollTop(1000000);
         }
 
 
@@ -864,6 +866,9 @@
                     count=count+1;
 
                     layer.msg('添加成功！');
+                    setTimeout(function () {
+                        $('#module').scrollTop(1000000);
+                    }, 100);
                 }else {
                     layer.msg(data.result.error);
                 }
@@ -883,6 +888,9 @@
                     count=count+1;
 
                     layer.msg('添加成功！');
+                    setTimeout(function () {
+                        $('#module').scrollTop(1000000);
+                    }, 100);
                 }else {
                     layer.msg(data.result.error);
                 }
