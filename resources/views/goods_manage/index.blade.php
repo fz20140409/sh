@@ -289,8 +289,8 @@
                         insert_id = response.insert_id;
                     } else {
                         insert_id = false;
-                        layer.msg(response.msg);
                     }
+                    layer.msg(response.msg);
                 }
 
             });
@@ -301,7 +301,7 @@
 
             var html = '<hr />';
                 html += '<div class="cat_p" style="padding: 10px 0px;margin-bottom: 10px">';
-                html += '<input class="minimal" name="cat_ids[]" type="checkbox" value="'+ insert_id +'">' + cat_name;
+                html += '<input class="minimal" name="cat_ids[]" type="checkbox" checked value="'+ insert_id +'">' + cat_name;
                 html += '</div>';
 
             $(".cat_p").parent().append(html);
@@ -309,6 +309,8 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             });
+
+            $(".cat_p").parent().scrollTop(1000000);
         }
 
         $('.cat_p').each(function () {
