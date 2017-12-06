@@ -372,7 +372,7 @@
 
                                                 @endif
                                         </div>
-                                        <button onclick="show_menu()" type="button"
+                                        <button onclick="show_menu(false)" type="button"
                                                 class="btn btn-default form-control">添加模块
                                         </button>
 
@@ -537,6 +537,7 @@
     <script src="/adminlte/plugins/iCheck/icheck.min.js"></script>
 
     <script>
+        var is_after = false;
         var count=0;
         var arr= [];
         @if(isset($id)&&!empty($goods_attr))
@@ -628,31 +629,82 @@
 
         //商品详情
         function add_wz() {
-            $('#module').append(' <div class="for-menu">' +
-                    '<textarea  order='+count+' class="menu_text menu_btn"></textarea>' +
-                    '<div class="toolBar">' +
-                       '<span class="menu-add"></span>'+
-                       '<span class="menu-up"></span>'+
-                       '<span class="menu-down"></span>'+
-                       '<span class="menu-del"></span>'+
-                     '</div>'+
-                '</div>');
-            arr.push({'type':1,'value':'',"count":count});
+            var order = is_after === false ? count : is_after + 1;
+            var html = ' <div class="for-menu">' +
+                            '<textarea  order='+order+' class="menu_text menu_btn"></textarea>' +
+                            '<div class="toolBar">' +
+                                '<span class="menu-add"></span>'+
+                                '<span class="menu-up"></span>'+
+                                '<span class="menu-down"></span>'+
+                                '<span class="menu-del"></span>'+
+                            '</div>'+
+                        '</div>';
+
+            if (is_after === false) {
+                $('#module').append(html);
+                arr.push({'type':1,'value':'',"count":count});
+                $('#module').scrollTop(1000000);
+            } else {
+                $(".for-menu").children(":not('.toolBar')").map(function () {
+                    if ($(this).attr('order') > is_after) {
+                        $(this).attr('order', parseInt($(this).attr('order')) + 1);
+                    }
+                });
+
+                $(".for-menu").eq(is_after).after(html);
+                var temp_arr = [];
+                for (var i=0; i < arr.length; i++) {
+                    if ((i - 1) == is_after) {
+                        temp_arr.push({'type':1,'value':'',"count":is_after + 1});
+                    }
+
+                    if (arr[i]['count'] > is_after) {
+                        arr[i]['count']++;
+                    }
+
+                    temp_arr.push(arr[i]);
+                }
+                arr = temp_arr;
+            }
+
             console.log(arr);
             count=count+1;
-
             layer.msg('添加成功！');
-            $('#module').scrollTop(1000000);
         }
         function add_hr() {
-            $('#module').append(' <div class="for-menu"><hr class="menu_btn" order="'+count+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
-          /*  arr[count]={'type':4,'value':''};*/
-            arr.push({'type':4,'value':'',"count":count});
+            var order = is_after === false ? count : is_after + 1;
+            var html = '<div class="for-menu"><hr class="menu_btn" order="'+order+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>';
+
+            if (is_after === false) {
+                $('#module').append(html);
+                arr.push({'type':4,'value':'',"count":count});
+                $('#module').scrollTop(1000000);
+            } else {
+                $(".for-menu").children(":not('.toolBar')").map(function () {
+                    if ($(this).attr('order') > is_after) {
+                        $(this).attr('order', parseInt($(this).attr('order')) + 1);
+                    }
+                });
+
+                $(".for-menu").eq(is_after).after(html);
+                var temp_arr = [];
+                for (var i=0; i < arr.length; i++) {
+                    if ((i - 1) == is_after) {
+                        temp_arr.push({'type':4,'value':'',"count":is_after + 1});
+                    }
+
+                    if (arr[i]['count'] > is_after) {
+                        arr[i]['count']++;
+                    }
+
+                    temp_arr.push(arr[i]);
+                }
+                arr = temp_arr;
+            }
+
             console.log(arr);
             count=count+1;
-
             layer.msg('添加成功！');
-            $('#module').scrollTop(1000000);
         }
 
 
@@ -667,8 +719,8 @@
                 p.remove();
         });
         $(document).on("click",".menu-add",function(){
-            show_menu();
-
+            var current_index = $(this).parents('.for-menu').index();
+            show_menu(parseInt(current_index));
         });
         $(document).on("click",".menu-up",function(){
             var p=$(this).closest('.for-menu');
@@ -739,8 +791,8 @@
 
 
         //展示菜单
-        function show_menu() {
-
+        function show_menu(value) {
+            is_after = value;
             layer.open({
                /* type: 1,
                 area: ['420px', ''], //宽高
@@ -859,16 +911,41 @@
             done: function (e, data) {
                 if (data.result.status == 200) {
 
-                    $('#module').append(' <div class="for-menu"><img class="menu_btn" order="'+count+'" width="100%" src="'+data.result.url+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
-                    /*  arr[count]={'type':4,'value':''};*/
-                    arr.push({'type':2,'value':data.result.url,"count":count});
+                    var order = is_after === false ? count : is_after + 1;
+                    var html = '<div class="for-menu"><img class="menu_btn" order="'+order+'" width="100%" src="'+data.result.url+'"><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>';
+
+                    if (is_after === false) {
+                        $('#module').append(html);
+                        arr.push({'type':2,'value':data.result.url,"count":count});
+                        setTimeout(function () {
+                            $('#module').scrollTop(1000000);
+                        }, 100);
+                    } else {
+                        $(".for-menu").children(":not('.toolBar')").map(function () {
+                            if ($(this).attr('order') > is_after) {
+                                $(this).attr('order', parseInt($(this).attr('order')) + 1);
+                            }
+                        });
+
+                        $(".for-menu").eq(is_after).after(html);
+                        var temp_arr = [];
+                        for (var i=0; i < arr.length; i++) {
+                            if ((i - 1) == is_after) {
+                                temp_arr.push({'type':2,'value':data.result.url,"count":is_after + 1});
+                            }
+
+                            if (arr[i]['count'] > is_after) {
+                                arr[i]['count']++;
+                            }
+
+                            temp_arr.push(arr[i]);
+                        }
+                        arr = temp_arr;
+                    }
+
                     console.log(arr);
                     count=count+1;
-
                     layer.msg('添加成功！');
-                    setTimeout(function () {
-                        $('#module').scrollTop(1000000);
-                    }, 100);
                 }else {
                     layer.msg(data.result.error);
                 }
@@ -880,17 +957,41 @@
             dataType: 'json',
             done: function (e, data) {
                 if (data.result.status == 200) {
+                    var order = is_after === false ? count : is_after + 1;
+                    var html = '<div class="for-menu"><video controls="controls" class="menu_btn" style="padding-bottom: 45px;" order="'+order+'" width="100%" src="'+data.result.url+'" ></video><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>';
 
-                    $('#module').append(' <div class="for-menu"><video controls="controls" class="menu_btn" style="padding-bottom: 45px;" order="'+count+'" width="100%" src="'+data.result.url+'" ></video><div class="toolBar"><span  class="menu-add"></span><span class="menu-up"></span><span class="menu-down"></span><span class="menu-del" ></span></div></div>');
-                    /*  arr[count]={'type':4,'value':''};*/
-                    arr.push({'type':3,'value':data.result.url,"count":count});
+                    if (is_after === false) {
+                        $('#module').append(html);
+                        arr.push({'type':3,'value':data.result.url,"count":count});
+                        setTimeout(function () {
+                            $('#module').scrollTop(1000000);
+                        }, 100);
+                    } else {
+                        $(".for-menu").children(":not('.toolBar')").map(function () {
+                            if ($(this).attr('order') > is_after) {
+                                $(this).attr('order', parseInt($(this).attr('order')) + 1);
+                            }
+                        });
+
+                        $(".for-menu").eq(is_after).after(html);
+                        var temp_arr = [];
+                        for (var i=0; i < arr.length; i++) {
+                            if ((i - 1) == is_after) {
+                                temp_arr.push({'type':3,'value':data.result.url,"count":is_after + 1});
+                            }
+
+                            if (arr[i]['count'] > is_after) {
+                                arr[i]['count']++;
+                            }
+
+                            temp_arr.push(arr[i]);
+                        }
+                        arr = temp_arr;
+                    }
+
                     console.log(arr);
                     count=count+1;
-
                     layer.msg('添加成功！');
-                    setTimeout(function () {
-                        $('#module').scrollTop(1000000);
-                    }, 100);
                 }else {
                     layer.msg(data.result.error);
                 }
